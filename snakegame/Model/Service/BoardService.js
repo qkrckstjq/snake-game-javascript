@@ -1,5 +1,5 @@
-import { Documents } from "../../Documents.js";
-import { ConditionValue } from "../Domain/ConditionValue.js";
+import { Documents } from "../Domain/Enums/Documents.js";
+import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
 
 const BoardService = {
     initTable : () => {
