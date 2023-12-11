@@ -1,4 +1,4 @@
-import { BoardService } from './snakegame/Model/Service/BoardService.js';
+import { BoardService } from './application/Model/Service/BoardService.js';
 
 // const table = document.querySelector('#main__wrapper');
 // for(let i = 0; i < 30; i++){
