@@ -1,0 +1,5 @@
+const SnakeService = {
+    checkOver : () => {
+        
+    }
+}

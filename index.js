@@ -1,22 +1,24 @@
-const table = document.querySelector('#main__wrapper');
+import { BoardService } from './snakegame/Model/Service/BoardService.js';
 
-for(let i = 0; i < 30; i++){
-    const tr = document.createElement('tr');
-    table.append(tr);
-    for(let j = 0; j < 36; j++){
-        const td = document.createElement('td');
-        document.getElementsByTagName('tr')[i].append(td);
-    }
-}
+// const table = document.querySelector('#main__wrapper');
+// for(let i = 0; i < 30; i++){
+//     const tr = document.createElement('tr');
+//     table.append(tr);
+//     for(let j = 0; j < 36; j++){
+//         const td = document.createElement('td');
+//         document.getElementsByTagName('tr')[i].append(td);
+//     }
+// }
 
-const cookieArr = document.cookie.split('; ');
-let CookieMode = undefined;
-for(let i = 0; i < cookieArr.length; i++) {
-    if(cookieArr[i].indexOf('mode') !== -1) {
-        CookieMode = Number(cookieArr[i].slice(5));
-        break;
-    }
-}
+// const cookieArr = document.cookie.split('; ');
+// let CookieMode = undefined;
+// for(let i = 0; i < cookieArr.length; i++) {
+//     if(cookieArr[i].indexOf('mode') !== -1) {
+//         CookieMode = Number(cookieArr[i].slice(5));
+//         break;
+//     }
+// }
+BoardService.initTable();
 
 
 function over (x,y) {
@@ -56,16 +58,16 @@ let nowstarted;                                     //현재 진행중인 setint
 let dp_point = 0;                                   //점수변수
 let isModal = 0;                                    //모달의 활성화 유무
 let [aY,aX] = make()                                //먹으면 점수가 증가하게 하는 포인트의 랜덤좌표만드는 함수
-let speed = CookieMode || 70;                       //speed의 변수에 따라 속도의 변화가 있음 기본값 0.07초
+let speed = 70;                       //speed의 변수에 따라 속도의 변화가 있음 기본값 0.07초
 let user_name = ''                                  //서버에 post할때 사용하게 될 변수
 let sending_point = 0;                              //서버에 post할때 사용하게 될 변수
 position[aY].childNodes[aX].classList.toggle('point');//초기 랜덤좌표에 포인트 생성
 position[onY].childNodes[onX].classList.toggle('snake');//초기좌표에 시작 snake생성
 let clearsetinterval = [];                          //현재 진행중인 setinterval들이 담길 배열
 
-document.addEventListener('DOMContentLoaded', function () {
-    CookieMode == 70 ? document.querySelector('.now__mode').textContent='노말' : document.querySelector('.now__mode').textContent='하드'
-})
+// document.addEventListener('DOMContentLoaded', function () {
+//     CookieMode == 70 ? document.querySelector('.now__mode').textContent='노말' : document.querySelector('.now__mode').textContent='하드'
+// })
 
 function make () {  //범위 안의 랜덤좌표 생성 이때 snake가 존재하는 tr위에 랜덤좌표가 생성시 다시 랜덤좌표를 뽑음
     while(1) {
