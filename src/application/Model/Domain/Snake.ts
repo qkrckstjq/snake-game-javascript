@@ -10,21 +10,21 @@ interface SnakeType {
     stateUp : boolean,
     stateDown : boolean,
     bodys : number[],
+    pointYX : number[],
+    nowProgressed : number | undefined,
     onX : number,
     onY : number,
-    pointYX : number[],
-    nowProgressed : Promise<void> | undefined,
 }
 
-const Snake = {
+const Snake:SnakeType = {
     startX : ConditionValue.startX,
     startY : ConditionValue.startY,
     stateRight : true,
     stateLeft : true,
     stateUp : true,
     stateDown : true,
-    bodys : SnakeService?.initBodys(),
-    pointYX : BoardService?.makePoint(),
+    bodys : [ConditionValue.startX, ConditionValue.startY],
+    pointYX : [ConditionValue.startX, ConditionValue.startY],
     nowProgressed : undefined,
     onX : ConditionValue.startX,
     onY : ConditionValue.startY,
@@ -32,4 +32,4 @@ const Snake = {
 
 
 
-export { Snake };
+export { Snake, SnakeType };

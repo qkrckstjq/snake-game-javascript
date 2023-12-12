@@ -1,18 +1,18 @@
-import { Documents } from "../Domain/Enums/Documents.js";
+import { Documents } from "../Domain/Documents.js";
 import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
 import { Snake }  from '../Domain/Snake.js';
 
 interface BoardServiceType {
-    initTable : () => void,
+    initTable : (element : HTMLElement) => void,
     makePoint : () => number[],
 }
 
 const BoardService:BoardServiceType = {
-    initTable : () => {
-        for(let i = 0; i < ConditionValue.row; i++){
+    initTable : (element) => {
+        for(let i = 0; i < ConditionValue.col; i++){
             const tr = document.createElement('tr');
-            Documents.table?.append(tr);
-            for(let j = 0; j < ConditionValue.col; j++){
+            element.append(tr);
+            for(let j = 0; j < ConditionValue.row; j++){
                 const td = document.createElement('td');
                 document.getElementsByTagName('tr')[i].append(td);
             }

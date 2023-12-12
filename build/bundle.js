@@ -2,6 +2,26 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./compile/application/Model/Domain/Documents.js":
+/*!*******************************************************!*\
+  !*** ./compile/application/Model/Domain/Documents.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Documents: () => (/* binding */ Documents)
+/* harmony export */ });
+/* harmony import */ var _Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+
+var Documents = {
+  table: document.querySelector(_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_0__.ClassList.table),
+  position: document.getElementsByTagName("tr")
+};
+
+
+/***/ }),
+
 /***/ "./compile/application/Model/Domain/Enums/ClassList.js":
 /*!*************************************************************!*\
   !*** ./compile/application/Model/Domain/Enums/ClassList.js ***!
@@ -47,26 +67,6 @@ var ConditionValue;
 
 /***/ }),
 
-/***/ "./compile/application/Model/Domain/Enums/Documents.js":
-/*!*************************************************************!*\
-  !*** ./compile/application/Model/Domain/Enums/Documents.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Documents: () => (/* binding */ Documents)
-/* harmony export */ });
-/* harmony import */ var _Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
-
-var Documents = {
-  table: document.querySelector(_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_0__.ClassList.table),
-  position: document.getElementsByTagName("tr")
-};
-
-
-/***/ }),
-
 /***/ "./compile/application/Model/Domain/Enums/KeyCodeList.js":
 /*!***************************************************************!*\
   !*** ./compile/application/Model/Domain/Enums/KeyCodeList.js ***!
@@ -88,6 +88,40 @@ var KeyCode;
 
 /***/ }),
 
+/***/ "./compile/application/Model/Domain/Game.js":
+/*!**************************************************!*\
+  !*** ./compile/application/Model/Domain/Game.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Game: () => (/* binding */ Game)
+/* harmony export */ });
+/* harmony import */ var _Service_BoardService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Service/BoardService */ "./compile/application/Model/Service/BoardService.js");
+/* harmony import */ var _Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Service/SnakeService */ "./compile/application/Model/Service/SnakeService.js");
+/* harmony import */ var _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Documents */ "./compile/application/Model/Domain/Documents.js");
+
+
+
+
+var Game = {
+  point: 0,
+  isModal: false,
+  gameInit: function gameInit(Snake) {
+    Snake.onX = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startX;
+    Snake.onY = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startY;
+    Snake.bodys = _Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__.SnakeService.initBodys();
+    Snake.pointYX = _Service_BoardService__WEBPACK_IMPORTED_MODULE_0__.BoardService.makePoint();
+    _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.startY].children[Snake.startX].classList.toggle('snake');
+    _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.pointYX[0]].children[Snake.pointYX[1]].classList.toggle('point');
+  }
+};
+
+
+/***/ }),
+
 /***/ "./compile/application/Model/Domain/Snake.js":
 /*!***************************************************!*\
   !*** ./compile/application/Model/Domain/Snake.js ***!
@@ -99,10 +133,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Snake: () => (/* binding */ Snake)
 /* harmony export */ });
 /* harmony import */ var _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-/* harmony import */ var _Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Service/SnakeService.js */ "./compile/application/Model/Service/SnakeService.js");
-/* harmony import */ var _Service_BoardService_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Service/BoardService.js */ "./compile/application/Model/Service/BoardService.js");
-
-
 
 var Snake = {
   startX: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX,
@@ -111,8 +141,8 @@ var Snake = {
   stateLeft: true,
   stateUp: true,
   stateDown: true,
-  bodys: _Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_1__.SnakeService === null || _Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_1__.SnakeService === void 0 ? void 0 : _Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_1__.SnakeService.initBodys(),
-  pointYX: _Service_BoardService_js__WEBPACK_IMPORTED_MODULE_2__.BoardService === null || _Service_BoardService_js__WEBPACK_IMPORTED_MODULE_2__.BoardService === void 0 ? void 0 : _Service_BoardService_js__WEBPACK_IMPORTED_MODULE_2__.BoardService.makePoint(),
+  bodys: [_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY],
+  pointYX: [_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY],
   nowProgressed: undefined,
   onX: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX,
   onY: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY
@@ -131,19 +161,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   BoardService: () => (/* binding */ BoardService)
 /* harmony export */ });
-/* harmony import */ var _Domain_Enums_Documents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Domain/Enums/Documents.js */ "./compile/application/Model/Domain/Enums/Documents.js");
-/* harmony import */ var _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-/* harmony import */ var _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
-
+/* harmony import */ var _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+/* harmony import */ var _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
 
 
 var BoardService = {
-  initTable: function initTable() {
-    var _a;
-    for (var i = 0; i < _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_1__.ConditionValue.row; i++) {
+  initTable: function initTable(element) {
+    for (var i = 0; i < _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.col; i++) {
       var tr = document.createElement('tr');
-      (_a = _Domain_Enums_Documents_js__WEBPACK_IMPORTED_MODULE_0__.Documents.table) === null || _a === void 0 ? void 0 : _a.append(tr);
-      for (var j = 0; j < _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_1__.ConditionValue.col; j++) {
+      element.append(tr);
+      for (var j = 0; j < _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.row; j++) {
         var td = document.createElement('td');
         document.getElementsByTagName('tr')[i].append(td);
       }
@@ -151,9 +178,9 @@ var BoardService = {
   },
   makePoint: function makePoint() {
     while (true) {
-      var numX = Math.floor(Math.random() * (_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_1__.ConditionValue.row - 1));
-      var numY = Math.floor(Math.random() * (_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_1__.ConditionValue.col - 1));
-      var snakes = _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.bodys;
+      var numX = Math.floor(Math.random() * (_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.row - 1));
+      var numY = Math.floor(Math.random() * (_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.col - 1));
+      var snakes = _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_1__.Snake.bodys;
       for (var i in snakes) {
         if (numY == snakes[i][0] && numX == snakes[i][1]) {
           continue;
@@ -178,9 +205,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SnakeService: () => (/* binding */ SnakeService)
 /* harmony export */ });
 /* harmony import */ var _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-/* harmony import */ var _Domain_Enums_Documents_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Domain/Enums/Documents.js */ "./compile/application/Model/Domain/Enums/Documents.js");
-/* harmony import */ var _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
-/* harmony import */ var _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
+/* harmony import */ var _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
+/* harmony import */ var _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -191,38 +217,37 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var SnakeService = {
   initBodys: function initBodys() {
     return [_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY];
   },
-  checkOver: function checkOver(x, y) {
-    if (x >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.row || y >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.col || x < 0 || y < 0 || _Domain_Enums_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents.position[y].children[x].classList.contains('snake')) {
+  checkOver: function checkOver(x, y, element) {
+    if (x >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.row || y >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.col || x < 0 || y < 0 || element[y].children[x].classList.contains('snake')) {
       //벽, 자기자신의 몸통에 충돌시 over함수 작동
       return true; //setinterval 동작에서는 필요없지만 동기적으로 작동하는 움직임에서는 over가 작동시 true를 리턴
     }
   },
-  move: function move(inputCode) {
-    if (_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__.KeyCode[inputCode]) {
-      clearInterval(_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.nowProgressed);
-      if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__.KeyCode.ArrowRight && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.stateRight) {
-        _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.startX++;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__.KeyCode.ArrowLeft && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.stateLeft) {
-        _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.startX--;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__.KeyCode.ArrowUp && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.stateUp) {
-        _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.startY++;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_2__.KeyCode.ArrowDown && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.stateDown) {
-        _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.startY--;
+  move: function move(inputCode, Snake) {
+    if (_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode[inputCode]) {
+      Snake.nowProgressed && clearInterval(Snake.nowProgressed);
+      if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowRight && Snake.stateRight) {
+        Snake.startX++;
+      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowLeft && Snake.stateLeft) {
+        Snake.startX--;
+      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowUp && Snake.stateUp) {
+        Snake.startY++;
+      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowDown && Snake.stateDown) {
+        Snake.startY--;
       }
       return true;
     }
     return false;
   },
   onHit: function onHit() {
-    var _Snake$pointYX = _slicedToArray(_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.pointYX, 2),
+    var _Snake$pointYX = _slicedToArray(_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.pointYX, 2),
       pointY = _Snake$pointYX[0],
       pointX = _Snake$pointYX[1];
-    if (_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.onY === pointY && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_3__.Snake.onX === pointX) {
+    if (_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.onY === pointY && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.onX === pointX) {
       return true;
     }
   }
@@ -295,8 +320,33 @@ var __webpack_exports__ = {};
   \**************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./application/Model/Service/BoardService.js */ "./compile/application/Model/Service/BoardService.js");
+/* harmony import */ var _application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./application/Model/Domain/Documents.js */ "./compile/application/Model/Domain/Documents.js");
+/* harmony import */ var _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./application/Model/Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
+/* harmony import */ var _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./application/Model/Service/SnakeService.js */ "./compile/application/Model/Service/SnakeService.js");
+/* harmony import */ var _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
 
-_application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__.BoardService.initTable();
+
+
+
+
+var Controller = {
+  Snake: _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake,
+  SnakeService: _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__.SnakeService,
+  gameStart: function gameStart() {
+    _application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__.BoardService.initTable(_application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents.table);
+    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.gameInit(Controller.Snake);
+  },
+  gameInit: function gameInit() {
+    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.gameInit(Controller.Snake);
+  },
+  move: function move(keyCode) {
+    if (Controller.SnakeService.move(keyCode, Controller.Snake)) {}
+  }
+};
+Controller.gameStart();
+document.addEventListener("keydown", function (e) {
+  Controller.move(e.code);
+});
 // const table = document.querySelector('#main__wrapper');
 // for(let i = 0; i < 30; i++){
 //     const tr = document.createElement('tr');

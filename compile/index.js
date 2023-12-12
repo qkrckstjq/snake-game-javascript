@@ -1,5 +1,27 @@
 import { BoardService } from './application/Model/Service/BoardService.js';
-BoardService.initTable();
+import { Documents } from './application/Model/Domain/Documents.js';
+import { Snake } from './application/Model/Domain/Snake.js';
+import { SnakeService } from './application/Model/Service/SnakeService.js';
+import { Game } from './application/Model/Domain/Game.js';
+const Controller = {
+    Snake: Snake,
+    SnakeService: SnakeService,
+    gameStart: () => {
+        BoardService.initTable(Documents.table);
+        Game.gameInit(Controller.Snake);
+    },
+    gameInit: () => {
+        Game.gameInit(Controller.Snake);
+    },
+    move: (keyCode) => {
+        if (Controller.SnakeService.move(keyCode, Controller.Snake)) {
+        }
+    }
+};
+Controller.gameStart();
+document.addEventListener("keydown", (e) => {
+    Controller.move(e.code);
+});
 // const table = document.querySelector('#main__wrapper');
 // for(let i = 0; i < 30; i++){
 //     const tr = document.createElement('tr');

@@ -1,24 +1,23 @@
 // import { classList } from '../Domain/Enums/ClassList.ts';
 import { ConditionValue } from '../Domain/Enums/ConditionValue.js';
-import { Documents } from '../Domain/Enums/Documents.js';
 import { KeyCode } from '../Domain/Enums/KeyCodeList.js';
 import { Snake } from '../Domain/Snake.js';
 const SnakeService = {
     initBodys: () => {
         return [ConditionValue.startX, ConditionValue.startY];
     },
-    checkOver: (x, y) => {
+    checkOver: (x, y, element) => {
         if ((x >= ConditionValue.row ||
             y >= ConditionValue.col ||
             x < 0 ||
             y < 0) ||
-            Documents.position[y].children[x].classList.contains('snake')) { //벽, 자기자신의 몸통에 충돌시 over함수 작동
+            element[y].children[x].classList.contains('snake')) { //벽, 자기자신의 몸통에 충돌시 over함수 작동
             return true; //setinterval 동작에서는 필요없지만 동기적으로 작동하는 움직임에서는 over가 작동시 true를 리턴
         }
     },
-    move: (inputCode) => {
+    move: (inputCode, Snake) => {
         if (KeyCode[inputCode]) {
-            clearInterval(Snake.nowProgressed);
+            Snake.nowProgressed && clearInterval(Snake.nowProgressed);
             if (inputCode == KeyCode.ArrowRight && Snake.stateRight) {
                 Snake.startX++;
             }

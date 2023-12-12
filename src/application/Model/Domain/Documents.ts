@@ -1,4 +1,4 @@
-import {ClassList} from "../Enums/ClassList.js";
+import {ClassList} from "./Enums/ClassList.js";
 
 interface DocumentsType {
     table : HTMLElement | null,

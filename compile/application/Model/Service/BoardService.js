@@ -1,13 +1,11 @@
-import { Documents } from "../Domain/Enums/Documents.js";
 import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
 import { Snake } from '../Domain/Snake.js';
 const BoardService = {
-    initTable: () => {
-        var _a;
-        for (let i = 0; i < ConditionValue.row; i++) {
+    initTable: (element) => {
+        for (let i = 0; i < ConditionValue.col; i++) {
             const tr = document.createElement('tr');
-            (_a = Documents.table) === null || _a === void 0 ? void 0 : _a.append(tr);
-            for (let j = 0; j < ConditionValue.col; j++) {
+            element.append(tr);
+            for (let j = 0; j < ConditionValue.row; j++) {
                 const td = document.createElement('td');
                 document.getElementsByTagName('tr')[i].append(td);
             }

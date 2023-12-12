@@ -1,7 +1,40 @@
 import { BoardService } from './application/Model/Service/BoardService.js';
-import { Snake } from './application/Model/Domain/Snake.js';
+import { Documents } from './application/Model/Domain/Documents.js';
+import { Snake, SnakeType } from './application/Model/Domain/Snake.js';
+import { SnakeService, SnakeServiceType } from './application/Model/Service/SnakeService.js';
+import { Game } from './application/Model/Domain/Game.js';
 
-BoardService.initTable();
+interface ControllerType {
+    Snake : SnakeType | undefined,
+    SnakeService : SnakeServiceType | undefined,
+    gameStart : () => void,
+    gameInit : () => void,
+    move : (keyCode : string) => void, 
+}
+
+const Controller:ControllerType = {
+    Snake : Snake,
+    SnakeService : SnakeService,
+    gameStart : () => {
+        BoardService.initTable(Documents.table);
+        Game.gameInit(Controller.Snake);
+    },
+    gameInit : () => {
+        Game.gameInit(Controller.Snake);
+    },
+    move : (keyCode) => {  
+        if(Controller.SnakeService.move(keyCode, Controller.Snake)) {
+            
+        }
+    }
+
+}
+
+Controller.gameStart();
+
+document.addEventListener("keydown", (e) => {
+    Controller.move(e.code);
+});
 
 
 // const table = document.querySelector('#main__wrapper');
