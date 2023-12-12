@@ -1,6 +1,6 @@
 // import { classList } from '../Domain/Enums/ClassList.ts';
-import {ConditionValue} from '../Domain/Enums/ConditionValue.js';
-import {Documents} from '../Domain/Enums/Documents.js';
+import { ConditionValue } from '../Domain/Enums/ConditionValue.js';
+import { Documents } from '../Domain/Enums/Documents.js';
 import { KeyCode } from '../Domain/Enums/KeyCodeList.js';
 import { Snake } from '../Domain/Snake.js';
 
@@ -8,7 +8,7 @@ interface SnakeServiceType {
     initBodys : () => number[],
     checkOver : (x : number, y : number) => boolean,
     move : (string) => boolean,
-    onHit : () => void,
+    onHit : () => boolean,
 }
 
 const SnakeService:SnakeServiceType = {
@@ -24,41 +24,26 @@ const SnakeService:SnakeServiceType = {
             return true                                                      //setinterval 동작에서는 필요없지만 동기적으로 작동하는 움직임에서는 over가 작동시 true를 리턴
         }
     },
-    move : (keyCode) => {
-        // if(keyCode ==  KeyCode.right) {
-        //     if(Snake.stateRight) {
-        //         clearInterval(Snake.nowProgressed);
-        //         Snake.startX++;
-        //         return true;
-        //     }
-        //     return false;
-        // } else if (keyCode == KeyCode.left) {
-        //     if(Snake.stateLeft) {
-        //         clearInterval(Snake.nowProgressed);
-        //         Snake.startX--;
-        //         return true;
-        //     }
-        //     return false;
-        // } else if (keyCode == KeyCode.up) {
-        //     if(Snake.stateUp) {
-        //         Snake.startY++;
-        //         return true;
-        //     }
-        //     return false;
-        // } else if (keyCode == KeyCode.down) {
-        //     if(Snake.stateDown) {
-        //         Snake.startY--;
-        //         return true;
-        //     }
-        //     return false;
-        // }
-        for()
+    move : (inputCode) => {
+        if(KeyCode[inputCode]) {
+            clearInterval(Snake.nowProgressed);
+            if(inputCode == KeyCode.ArrowRight && Snake.stateRight) {
+                Snake.startX++;
+            } else if (inputCode == KeyCode.ArrowLeft && Snake.stateLeft) {
+                Snake.startX--;
+            } else if (inputCode == KeyCode.ArrowUp && Snake.stateUp) {
+                Snake.startY++;
+            } else if (inputCode == KeyCode.ArrowDown && Snake.stateDown) {
+                Snake.startY--;
+            }
+            return true;
+        }
         return false;
     },
     onHit : () => {
         const [pointY, pointX] = Snake.pointYX;
         if(Snake.onY === pointY && Snake.onX === pointX) {
-
+            return true;
         }
     }
 }

@@ -1,8 +1,8 @@
 enum KeyCode {
-    right = "ArrowRight",
-    left = "ArrowLeft",
-    up = "ArrowUp",
-    down = "ArrowDown",
+    ArrowRight = "ArrowRight",
+    ArrowLeft = "ArrowLeft",
+    ArrowUp = "ArrowUp",
+    ArrowDown = "ArrowDown",
 }
 
 export {KeyCode};
