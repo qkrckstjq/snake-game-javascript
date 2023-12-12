@@ -21,7 +21,7 @@ const SnakeService:SnakeServiceType = {
         Snake.bodys.pop();
     },
     initBodys : () => {
-        return [ConditionValue.startX, ConditionValue.startY];
+        return [ConditionValue.startY, ConditionValue.startX];
     },
     checkOver : (x, y, element) => {
         if((x >= ConditionValue.row || 

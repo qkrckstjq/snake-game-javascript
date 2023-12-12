@@ -33,4 +33,4 @@ const BoardService:BoardServiceType = {
     }
 }
 
-export { BoardService };
+export { BoardService, BoardServiceType };

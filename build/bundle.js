@@ -89,40 +89,6 @@ var KeyCode;
 
 /***/ }),
 
-/***/ "./compile/application/Model/Domain/Game.js":
-/*!**************************************************!*\
-  !*** ./compile/application/Model/Domain/Game.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Game: () => (/* binding */ Game)
-/* harmony export */ });
-/* harmony import */ var _Service_BoardService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Service/BoardService */ "./compile/application/Model/Service/BoardService.js");
-/* harmony import */ var _Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Service/SnakeService */ "./compile/application/Model/Service/SnakeService.js");
-/* harmony import */ var _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Documents */ "./compile/application/Model/Domain/Documents.js");
-
-
-
-
-var Game = {
-  point: 0,
-  isModal: false,
-  snakeInit: function snakeInit(Snake) {
-    Snake.onX = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startX;
-    Snake.onY = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startY;
-    Snake.bodys = [_Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__.SnakeService.initBodys()];
-    Snake.pointYX = _Service_BoardService__WEBPACK_IMPORTED_MODULE_0__.BoardService.makePoint();
-    _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.startY].children[Snake.startX].classList.toggle('snake');
-    _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.pointYX[0]].children[Snake.pointYX[1]].classList.toggle('point');
-  }
-};
-
-
-/***/ }),
-
 /***/ "./compile/application/Model/Domain/Snake.js":
 /*!***************************************************!*\
   !*** ./compile/application/Model/Domain/Snake.js ***!
@@ -230,7 +196,7 @@ var SnakeService = {
     Snake.bodys.pop();
   },
   initBodys: function initBodys() {
-    return [_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY];
+    return [_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY, _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX];
   },
   checkOver: function checkOver(x, y, element) {
     if (x >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.row || y >= _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.col || x < 0 || y < 0 || element[y].children[x].classList.contains('snake')) {
@@ -347,9 +313,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./application/Model/Domain/Documents.js */ "./compile/application/Model/Domain/Documents.js");
 /* harmony import */ var _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./application/Model/Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
 /* harmony import */ var _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./application/Model/Service/SnakeService.js */ "./compile/application/Model/Service/SnakeService.js");
-/* harmony import */ var _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
-/* harmony import */ var _application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
-/* harmony import */ var _application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./application/Model/Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+/* harmony import */ var _application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
+/* harmony import */ var _application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./application/Model/Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+/* harmony import */ var _application_Model_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./application/Model/Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
 
 
 
@@ -361,27 +327,33 @@ var Controller = {
   Snake: _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake,
   SnakeService: _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__.SnakeService,
   Documents: _application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents,
+  BoardService: _application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__.BoardService,
   addClassSnake: function addClassSnake(y, x) {
-    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.snake);
+    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_5__.ClassList.snake);
   },
   addClassPoint: function addClassPoint(y, x) {
-    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.point);
+    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_5__.ClassList.point);
   },
   removeClassSnake: function removeClassSnake(y, x) {
-    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.snake);
+    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_5__.ClassList.snake);
   },
   removeClassPoint: function removeClassPoint(y, x) {
-    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.point);
+    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_5__.ClassList.point);
   },
   gameStart: function gameStart() {
     _application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__.BoardService.initTable(_application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents.table);
-    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.snakeInit(Controller.Snake);
+    Controller.gameInit();
   },
   gameInit: function gameInit() {
-    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.snakeInit(Controller.Snake);
+    Controller.Snake.onY = _application_Model_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_6__.ConditionValue.startY;
+    Controller.Snake.onX = _application_Model_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_6__.ConditionValue.startX;
+    Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
+    Controller.Snake.pointYX = Controller.BoardService.makePoint();
+    Controller.addClassSnake(Controller.Snake.startY, Controller.Snake.startX);
+    Controller.addClassPoint(Controller.Snake.pointYX[0], Controller.Snake.pointYX[1]);
   },
   move: function move(keyCode) {
-    if (_application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_5__.KeyCode[keyCode]) {
+    if (_application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_4__.KeyCode[keyCode]) {
       if (Controller.SnakeService.move(keyCode, Controller.Snake)) {
         ;
         Controller.SnakeService.addSnake(Controller.Snake, Controller.Snake.onY, Controller.Snake.onX);

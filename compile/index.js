@@ -2,13 +2,14 @@ import { BoardService } from './application/Model/Service/BoardService.js';
 import { Documents } from './application/Model/Domain/Documents.js';
 import { Snake } from './application/Model/Domain/Snake.js';
 import { SnakeService } from './application/Model/Service/SnakeService.js';
-import { Game } from './application/Model/Domain/Game.js';
 import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
 import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
+import { ConditionValue } from './application/Model/Domain/Enums/ConditionValue.js';
 const Controller = {
     Snake: Snake,
     SnakeService: SnakeService,
     Documents: Documents,
+    BoardService: BoardService,
     addClassSnake: (y, x) => {
         Controller.Documents.position[y].children[x].classList.add(ClassList.snake);
     },
@@ -23,10 +24,15 @@ const Controller = {
     },
     gameStart: () => {
         BoardService.initTable(Documents.table);
-        Game.snakeInit(Controller.Snake);
+        Controller.gameInit();
     },
     gameInit: () => {
-        Game.snakeInit(Controller.Snake);
+        Controller.Snake.onY = ConditionValue.startY;
+        Controller.Snake.onX = ConditionValue.startX;
+        Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
+        Controller.Snake.pointYX = Controller.BoardService.makePoint();
+        Controller.addClassSnake(Controller.Snake.startY, Controller.Snake.startX);
+        Controller.addClassPoint(Controller.Snake.pointYX[0], Controller.Snake.pointYX[1]);
     },
     move: (keyCode) => {
         if (KeyCode[keyCode]) {
