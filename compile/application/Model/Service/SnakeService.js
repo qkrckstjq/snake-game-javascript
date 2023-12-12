@@ -1,8 +1,13 @@
 // import { classList } from '../Domain/Enums/ClassList.ts';
 import { ConditionValue } from '../Domain/Enums/ConditionValue.js';
 import { KeyCode } from '../Domain/Enums/KeyCodeList.js';
-import { Snake } from '../Domain/Snake.js';
 const SnakeService = {
+    addSnake: (Snake, y, x) => {
+        Snake.bodys.unshift([y, x]);
+    },
+    removeSnake: (Snake) => {
+        Snake.bodys.pop();
+    },
     initBodys: () => {
         return [ConditionValue.startX, ConditionValue.startY];
     },
@@ -16,29 +21,46 @@ const SnakeService = {
         }
     },
     move: (inputCode, Snake) => {
-        if (KeyCode[inputCode]) {
-            Snake.nowProgressed && clearInterval(Snake.nowProgressed);
-            if (inputCode == KeyCode.ArrowRight && Snake.stateRight) {
-                Snake.startX++;
-            }
-            else if (inputCode == KeyCode.ArrowLeft && Snake.stateLeft) {
-                Snake.startX--;
-            }
-            else if (inputCode == KeyCode.ArrowUp && Snake.stateUp) {
-                Snake.startY++;
-            }
-            else if (inputCode == KeyCode.ArrowDown && Snake.stateDown) {
-                Snake.startY--;
-            }
+        Snake.nowProgressed && clearInterval(Snake.nowProgressed);
+        if (inputCode == KeyCode.ArrowRight && Snake.stateRight) {
+            Snake.stateRight = false;
+            Snake.stateLeft = false,
+                Snake.stateUp = true;
+            Snake.stateDown = true;
+            Snake.onX += 1;
+            return true;
+        }
+        else if (inputCode == KeyCode.ArrowLeft && Snake.stateLeft) {
+            Snake.stateRight = false;
+            Snake.stateLeft = false,
+                Snake.stateUp = true;
+            Snake.stateDown = true;
+            Snake.onX -= 1;
+            return true;
+        }
+        else if (inputCode == KeyCode.ArrowUp && Snake.stateUp) {
+            Snake.stateRight = true;
+            Snake.stateLeft = true,
+                Snake.stateUp = false;
+            Snake.stateDown = false;
+            Snake.onY -= 1;
+            return true;
+        }
+        else if (inputCode == KeyCode.ArrowDown && Snake.stateDown) {
+            Snake.stateRight = true;
+            Snake.stateLeft = true,
+                Snake.stateUp = false;
+            Snake.stateDown = false;
+            Snake.onY += 1;
             return true;
         }
         return false;
     },
-    onHit: () => {
+    onHit: (Snake) => {
         const [pointY, pointX] = Snake.pointYX;
         if (Snake.onY === pointY && Snake.onX === pointX) {
             return true;
         }
-    }
+    },
 };
 export { SnakeService };

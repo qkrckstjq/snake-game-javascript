@@ -36,6 +36,7 @@ var ClassList;
 (function (ClassList) {
   ClassList["table"] = "#main__wrapper";
   ClassList["snake"] = "snake";
+  ClassList["point"] = "point";
   ClassList["gameOverModal"] = ".gameover__modal__wrapper";
   ClassList["tr"] = "tr";
 })(ClassList || (ClassList = {}));
@@ -109,10 +110,10 @@ __webpack_require__.r(__webpack_exports__);
 var Game = {
   point: 0,
   isModal: false,
-  gameInit: function gameInit(Snake) {
+  snakeInit: function snakeInit(Snake) {
     Snake.onX = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startX;
     Snake.onY = _Enums_ConditionValue__WEBPACK_IMPORTED_MODULE_2__.ConditionValue.startY;
-    Snake.bodys = _Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__.SnakeService.initBodys();
+    Snake.bodys = [_Service_SnakeService__WEBPACK_IMPORTED_MODULE_1__.SnakeService.initBodys()];
     Snake.pointYX = _Service_BoardService__WEBPACK_IMPORTED_MODULE_0__.BoardService.makePoint();
     _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.startY].children[Snake.startX].classList.toggle('snake');
     _Documents__WEBPACK_IMPORTED_MODULE_3__.Documents.position[Snake.pointYX[0]].children[Snake.pointYX[1]].classList.toggle('point');
@@ -141,11 +142,17 @@ var Snake = {
   stateLeft: true,
   stateUp: true,
   stateDown: true,
-  bodys: [_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY],
+  bodys: [[_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY, _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX], [1, 2], [1, 2, 3, 4]],
   pointYX: [_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY],
   nowProgressed: undefined,
   onX: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX,
-  onY: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY
+  onY: _Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY,
+  getLastY: function getLastY() {
+    return Snake.bodys[Snake.bodys.length - 1][0];
+  },
+  getLastX: function getLastX() {
+    return Snake.bodys[Snake.bodys.length - 1][1];
+  }
 };
 
 
@@ -206,7 +213,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
 /* harmony import */ var _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
-/* harmony import */ var _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -216,8 +222,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 // import { classList } from '../Domain/Enums/ClassList.ts';
 
 
-
 var SnakeService = {
+  addSnake: function addSnake(Snake, y, x) {
+    Snake.bodys.unshift([y, x]);
+  },
+  removeSnake: function removeSnake(Snake) {
+    Snake.bodys.pop();
+  },
   initBodys: function initBodys() {
     return [_Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startX, _Domain_Enums_ConditionValue_js__WEBPACK_IMPORTED_MODULE_0__.ConditionValue.startY];
   },
@@ -228,26 +239,39 @@ var SnakeService = {
     }
   },
   move: function move(inputCode, Snake) {
-    if (_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode[inputCode]) {
-      Snake.nowProgressed && clearInterval(Snake.nowProgressed);
-      if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowRight && Snake.stateRight) {
-        Snake.startX++;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowLeft && Snake.stateLeft) {
-        Snake.startX--;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowUp && Snake.stateUp) {
-        Snake.startY++;
-      } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowDown && Snake.stateDown) {
-        Snake.startY--;
-      }
+    Snake.nowProgressed && clearInterval(Snake.nowProgressed);
+    if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowRight && Snake.stateRight) {
+      Snake.stateRight = false;
+      Snake.stateLeft = false, Snake.stateUp = true;
+      Snake.stateDown = true;
+      Snake.onX += 1;
+      return true;
+    } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowLeft && Snake.stateLeft) {
+      Snake.stateRight = false;
+      Snake.stateLeft = false, Snake.stateUp = true;
+      Snake.stateDown = true;
+      Snake.onX -= 1;
+      return true;
+    } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowUp && Snake.stateUp) {
+      Snake.stateRight = true;
+      Snake.stateLeft = true, Snake.stateUp = false;
+      Snake.stateDown = false;
+      Snake.onY -= 1;
+      return true;
+    } else if (inputCode == _Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_1__.KeyCode.ArrowDown && Snake.stateDown) {
+      Snake.stateRight = true;
+      Snake.stateLeft = true, Snake.stateUp = false;
+      Snake.stateDown = false;
+      Snake.onY += 1;
       return true;
     }
     return false;
   },
-  onHit: function onHit() {
-    var _Snake$pointYX = _slicedToArray(_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.pointYX, 2),
+  onHit: function onHit(Snake) {
+    var _Snake$pointYX = _slicedToArray(Snake.pointYX, 2),
       pointY = _Snake$pointYX[0],
       pointX = _Snake$pointYX[1];
-    if (_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.onY === pointY && _Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.onX === pointX) {
+    if (Snake.onY === pointY && Snake.onX === pointX) {
       return true;
     }
   }
@@ -324,6 +348,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./application/Model/Domain/Snake.js */ "./compile/application/Model/Domain/Snake.js");
 /* harmony import */ var _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./application/Model/Service/SnakeService.js */ "./compile/application/Model/Service/SnakeService.js");
 /* harmony import */ var _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
+/* harmony import */ var _application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
+/* harmony import */ var _application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./application/Model/Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+
+
 
 
 
@@ -332,15 +360,37 @@ __webpack_require__.r(__webpack_exports__);
 var Controller = {
   Snake: _application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake,
   SnakeService: _application_Model_Service_SnakeService_js__WEBPACK_IMPORTED_MODULE_3__.SnakeService,
+  Documents: _application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents,
+  addClassSnake: function addClassSnake(y, x) {
+    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.snake);
+  },
+  addClassPoint: function addClassPoint(y, x) {
+    Controller.Documents.position[y].children[x].classList.add(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.point);
+  },
+  removeClassSnake: function removeClassSnake(y, x) {
+    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.snake);
+  },
+  removeClassPoint: function removeClassPoint(y, x) {
+    Controller.Documents.position[y].children[x].classList.remove(_application_Model_Domain_Enums_ClassList_js__WEBPACK_IMPORTED_MODULE_6__.ClassList.point);
+  },
   gameStart: function gameStart() {
     _application_Model_Service_BoardService_js__WEBPACK_IMPORTED_MODULE_0__.BoardService.initTable(_application_Model_Domain_Documents_js__WEBPACK_IMPORTED_MODULE_1__.Documents.table);
-    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.gameInit(Controller.Snake);
+    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.snakeInit(Controller.Snake);
   },
   gameInit: function gameInit() {
-    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.gameInit(Controller.Snake);
+    _application_Model_Domain_Game_js__WEBPACK_IMPORTED_MODULE_4__.Game.snakeInit(Controller.Snake);
   },
   move: function move(keyCode) {
-    if (Controller.SnakeService.move(keyCode, Controller.Snake)) {}
+    if (_application_Model_Domain_Enums_KeyCodeList_js__WEBPACK_IMPORTED_MODULE_5__.KeyCode[keyCode]) {
+      if (Controller.SnakeService.move(keyCode, Controller.Snake)) {
+        ;
+        Controller.SnakeService.addSnake(Controller.Snake, Controller.Snake.onY, Controller.Snake.onX);
+        Controller.addClassSnake(Controller.Snake.onY, Controller.Snake.onX);
+        console.log(_application_Model_Domain_Snake_js__WEBPACK_IMPORTED_MODULE_2__.Snake.bodys);
+        Controller.removeClassSnake(Controller.Snake.getLastY(), Controller.Snake.getLastX());
+        Controller.SnakeService.removeSnake(Controller.Snake);
+      }
+    }
   }
 };
 Controller.gameStart();

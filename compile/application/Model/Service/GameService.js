@@ -1,0 +1,2 @@
+const GameService = {};
+export { GameService };

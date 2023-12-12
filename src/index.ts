@@ -1,12 +1,19 @@
 import { BoardService } from './application/Model/Service/BoardService.js';
-import { Documents } from './application/Model/Domain/Documents.js';
+import { Documents, DocumentsType } from './application/Model/Domain/Documents.js';
 import { Snake, SnakeType } from './application/Model/Domain/Snake.js';
 import { SnakeService, SnakeServiceType } from './application/Model/Service/SnakeService.js';
 import { Game } from './application/Model/Domain/Game.js';
+import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
+import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
 
 interface ControllerType {
     Snake : SnakeType | undefined,
     SnakeService : SnakeServiceType | undefined,
+    Documents : DocumentsType
+    addClassSnake : (y : number, x : number) => void
+    addClassPoint : (y : number, x : number) => void
+    removeClassSnake : (y : number, x : number) => void
+    removeClassPoint : (y : number, x : number) => void
     gameStart : () => void,
     gameInit : () => void,
     move : (keyCode : string) => void, 
@@ -15,23 +22,41 @@ interface ControllerType {
 const Controller:ControllerType = {
     Snake : Snake,
     SnakeService : SnakeService,
+    Documents : Documents,
+    addClassSnake : (y,x) => {
+        Controller.Documents.position[y].children[x].classList.add(ClassList.snake);
+    },
+    addClassPoint : (y, x) => {
+        Controller.Documents.position[y].children[x].classList.add(ClassList.point);
+    },
+    removeClassSnake : (y, x) => {
+        Controller.Documents.position[y].children[x].classList.remove(ClassList.snake);
+    },
+    removeClassPoint : (y, x) => {
+        Controller.Documents.position[y].children[x].classList.remove(ClassList.point);
+    },
     gameStart : () => {
         BoardService.initTable(Documents.table);
-        Game.gameInit(Controller.Snake);
+        Game.snakeInit(Controller.Snake);
     },
     gameInit : () => {
-        Game.gameInit(Controller.Snake);
+        Game.snakeInit(Controller.Snake);
     },
     move : (keyCode) => {  
-        if(Controller.SnakeService.move(keyCode, Controller.Snake)) {
-            
+        if(KeyCode[keyCode]) {
+            if(Controller.SnakeService.move(keyCode, Controller.Snake)) {;
+                Controller.SnakeService.addSnake(Controller.Snake, Controller.Snake.onY, Controller.Snake.onX);
+                Controller.addClassSnake(Controller.Snake.onY, Controller.Snake.onX);
+                console.log(Snake.bodys);
+                Controller.removeClassSnake(Controller.Snake.getLastY(), Controller.Snake.getLastX());
+                Controller.SnakeService.removeSnake(Controller.Snake);
+            }
         }
     }
 
 }
 
 Controller.gameStart();
-
 document.addEventListener("keydown", (e) => {
     Controller.move(e.code);
 });

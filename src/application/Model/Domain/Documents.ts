@@ -10,4 +10,4 @@ const Documents:DocumentsType = {
     position : document.getElementsByTagName("tr"),
 }
 
-export {Documents};
+export {Documents, DocumentsType};

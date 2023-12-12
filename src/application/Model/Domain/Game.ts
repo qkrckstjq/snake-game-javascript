@@ -12,10 +12,10 @@ interface GameType {
 const Game = {
     point : 0,
     isModal : false,
-    gameInit : (Snake) => {
+    snakeInit : (Snake) => {
         Snake.onX = ConditionValue.startX;
         Snake.onY = ConditionValue.startY;
-        Snake.bodys = SnakeService.initBodys();
+        Snake.bodys = [SnakeService.initBodys()];
         Snake.pointYX = BoardService.makePoint();
         Documents.position[Snake.startY].children[Snake.startX].classList.toggle('snake');
         Documents.position[Snake.pointYX[0]].children[Snake.pointYX[1]].classList.toggle('point');
