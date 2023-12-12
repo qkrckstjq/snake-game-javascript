@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6", //어떤버전의 js로 컴파일할지 정의
+    // "jsx": "react-jsx" //jsx 문법 허용
+    // "noEmit": true,
+    // "allowImportingTsExtensions": true,
+    "outDir": "./build",
+    // "strict" : true,
+  },
+  "include": [ //컴파일할 폴더 입력. src의 모든파일 확인함
+    "src/**/*.ts"
+  ],
+  "exclude": [ //컴파일에서 제외할 폴더
+    "node_modules"   
+  ],
+}
