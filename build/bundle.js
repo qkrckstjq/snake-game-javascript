@@ -261,30 +261,24 @@ function SnakeService() {
       Snake.stateLeft = false, Snake.stateUp = true;
       Snake.stateDown = true;
       Snake.onX += 1;
-      return true;
     } else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowLeft) {
       Snake.stateRight = false;
       Snake.stateLeft = false, Snake.stateUp = true;
       Snake.stateDown = true;
       Snake.onX -= 1;
-      return true;
     } else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowUp) {
       Snake.stateRight = true;
       Snake.stateLeft = true, Snake.stateUp = false;
       Snake.stateDown = false;
       Snake.onY -= 1;
-      return true;
     } else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowDown) {
       Snake.stateRight = true;
       Snake.stateLeft = true, Snake.stateUp = false;
       Snake.stateDown = false;
       Snake.onY += 1;
-      return true;
     }
-    return false;
   };
   this.moveAsync = function (keyCode, Snake, Game, callback) {
-    clearInterval(Snake.nowProgressed);
     Snake.nowProgressed = setInterval(function () {
       if (keyCode == KeyCodeList_js_1.KeyCode.ArrowRight) {
         Snake.onX += 1;
@@ -298,8 +292,8 @@ function SnakeService() {
       if (keyCode == KeyCodeList_js_1.KeyCode.ArrowDown) {
         Snake.onY += 1;
       }
-      callback.forEach(function (func) {
-        func();
+      callback.forEach(function (callback) {
+        callback();
       });
     }, Game.speed);
   };
@@ -310,6 +304,7 @@ function SnakeService() {
     if (Snake.onY === pointY && Snake.onX === pointX) {
       return true;
     }
+    return false;
   };
   this.checkCanChangeDirection = function (Snake, keyCode) {
     if (keyCode == KeyCodeList_js_1.KeyCode.ArrowRight && Snake.stateRight) {
@@ -325,6 +320,12 @@ function SnakeService() {
       return true;
     }
     return false;
+  };
+  this.initState = function (Snake) {
+    Snake.stateRight = true;
+    Snake.stateLeft = true;
+    Snake.stateUp = true;
+    Snake.stateDown = true;
   };
 }
 exports.SnakeService = SnakeService;
@@ -410,11 +411,13 @@ function Controller() {
   this.gameStart = function () {
     _this.BoardService.initTable(Documents_js_1.Documents.table);
     _this.gameInit();
-  }, this.gameInit = function () {
+  };
+  this.gameInit = function () {
     _this.GameService.setGameState(_this.Game, true);
     _this.SnakeService.initSnake(_this.Snake, _this.BoardService);
     _this.addClassSnake(_this.Snake.startY, _this.Snake.startX);
     _this.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+    _this.SnakeService.initState(_this.Snake);
   };
   this.whenOver = function () {
     clearInterval(_this.Snake.nowProgressed);
@@ -430,13 +433,21 @@ function Controller() {
     }
     _this.moveFoward();
   };
-  this.move = function (keyCode) {
-    if (_this.SnakeService.move(keyCode, _this.Snake)) {
-      _this.checkOver();
+  this.whenOnPoint = function () {
+    if (_this.SnakeService.onHit(_this.Snake)) {
+      _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
+      _this.moveFoward();
+      return;
     }
+    _this.checkOver();
+  };
+  this.move = function (keyCode) {
+    _this.SnakeService.move(keyCode, _this.Snake);
+    _this.whenOnPoint();
   };
   this.moveAsync = function (keyCode) {
-    _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.checkOver]);
+    clearInterval(_this.Snake.nowProgressed);
+    _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.whenOnPoint]);
   };
 }
 var controller = new Controller();

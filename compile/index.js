@@ -41,13 +41,14 @@ function Controller() {
     this.gameStart = function () {
         _this.BoardService.initTable(Documents_js_1.Documents.table);
         _this.gameInit();
-    },
-        this.gameInit = function () {
-            _this.GameService.setGameState(_this.Game, true);
-            _this.SnakeService.initSnake(_this.Snake, _this.BoardService);
-            _this.addClassSnake(_this.Snake.startY, _this.Snake.startX);
-            _this.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
-        };
+    };
+    this.gameInit = function () {
+        _this.GameService.setGameState(_this.Game, true);
+        _this.SnakeService.initSnake(_this.Snake, _this.BoardService);
+        _this.addClassSnake(_this.Snake.startY, _this.Snake.startX);
+        _this.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+        _this.SnakeService.initState(_this.Snake);
+    };
     this.whenOver = function () {
         clearInterval(_this.Snake.nowProgressed);
         _this.GameService.setGameState(_this.Game, false);
@@ -62,13 +63,23 @@ function Controller() {
         }
         _this.moveFoward();
     };
-    this.move = function (keyCode) {
-        if (_this.SnakeService.move(keyCode, _this.Snake)) {
-            _this.checkOver();
+    this.whenOnPoint = function () {
+        if (_this.SnakeService.onHit(_this.Snake)) {
+            _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
+            _this.moveFoward();
+            return;
         }
+        _this.checkOver();
+    };
+    this.move = function (keyCode) {
+        _this.SnakeService.move(keyCode, _this.Snake);
+        _this.whenOnPoint();
     };
     this.moveAsync = function (keyCode) {
-        _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.checkOver]);
+        clearInterval(_this.Snake.nowProgressed);
+        _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [
+            _this.whenOnPoint,
+        ]);
     };
 }
 var controller = new Controller();

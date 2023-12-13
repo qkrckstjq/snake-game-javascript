@@ -34,7 +34,6 @@ function SnakeService() {
                 Snake.stateUp = true;
             Snake.stateDown = true;
             Snake.onX += 1;
-            return true;
         }
         else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowLeft) {
             Snake.stateRight = false;
@@ -42,7 +41,6 @@ function SnakeService() {
                 Snake.stateUp = true;
             Snake.stateDown = true;
             Snake.onX -= 1;
-            return true;
         }
         else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowUp) {
             Snake.stateRight = true;
@@ -50,7 +48,6 @@ function SnakeService() {
                 Snake.stateUp = false;
             Snake.stateDown = false;
             Snake.onY -= 1;
-            return true;
         }
         else if (inputCode == KeyCodeList_js_1.KeyCode.ArrowDown) {
             Snake.stateRight = true;
@@ -58,12 +55,9 @@ function SnakeService() {
                 Snake.stateUp = false;
             Snake.stateDown = false;
             Snake.onY += 1;
-            return true;
         }
-        return false;
     };
     this.moveAsync = function (keyCode, Snake, Game, callback) {
-        clearInterval(Snake.nowProgressed);
         Snake.nowProgressed = setInterval(function () {
             if (keyCode == KeyCodeList_js_1.KeyCode.ArrowRight) {
                 Snake.onX += 1;
@@ -77,8 +71,8 @@ function SnakeService() {
             if (keyCode == KeyCodeList_js_1.KeyCode.ArrowDown) {
                 Snake.onY += 1;
             }
-            callback.forEach(function (func) {
-                func();
+            callback.forEach(function (callback) {
+                callback();
             });
         }, Game.speed);
     };
@@ -87,6 +81,7 @@ function SnakeService() {
         if (Snake.onY === pointY && Snake.onX === pointX) {
             return true;
         }
+        return false;
     };
     this.checkCanChangeDirection = function (Snake, keyCode) {
         if (keyCode == KeyCodeList_js_1.KeyCode.ArrowRight && Snake.stateRight) {
@@ -102,6 +97,12 @@ function SnakeService() {
             return true;
         }
         return false;
+    };
+    this.initState = function (Snake) {
+        Snake.stateRight = true;
+        Snake.stateLeft = true;
+        Snake.stateUp = true;
+        Snake.stateDown = true;
     };
 }
 exports.SnakeService = SnakeService;

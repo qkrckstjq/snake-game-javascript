@@ -25,6 +25,7 @@ interface ControllerType {
     gameInit : () => void,
     whenOver : () => void,
     checkOver : () => void,
+    whenOnPoint : () => void,
     move : (keyCode : string) => void, 
     moveAsync : (keyCode : string) => void,
 }
@@ -57,17 +58,17 @@ function Controller(this : ControllerType) {
         this.addClassSnake(this.Snake.onY, this.Snake.onX);
         this.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
         this.SnakeService.removeSnake(this.Snake);   
-    }
-
+    };
     this.gameStart = () => {
         this.BoardService.initTable(Documents.table);
         this.gameInit();
-    },
+    };
     this.gameInit = () => {
         this.GameService.setGameState(this.Game, true);
         this.SnakeService.initSnake(this.Snake, this.BoardService);
         this.addClassSnake(this.Snake.startY, this.Snake.startX);
         this.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.SnakeService.initState(this.Snake);
     };
     this.whenOver = () => {
         clearInterval(this.Snake.nowProgressed);
@@ -83,13 +84,23 @@ function Controller(this : ControllerType) {
         }
         this.moveFoward();
     }
-    this.move = (keyCode) => {  
-        if(this.SnakeService.move(keyCode, this.Snake)) {
-            this.checkOver();
+    this.whenOnPoint = () => {
+        if(this.SnakeService.onHit(this.Snake)) {
+            this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
+            this.moveFoward();
+            return;
         }
+        this.checkOver();
+    }
+    this.move = (keyCode) => {  
+        this.SnakeService.move(keyCode, this.Snake)
+        this.whenOnPoint();
     };
     this.moveAsync = (keyCode) => {
-        this.SnakeService.moveAsync(keyCode, this.Snake, this.Game, [this.checkOver]);
+        clearInterval(this.Snake.nowProgressed);
+        this.SnakeService.moveAsync(keyCode, this.Snake, this.Game,[
+            this.whenOnPoint,
+        ]);
     }
 }
 
