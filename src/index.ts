@@ -8,8 +8,10 @@ import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
 import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
 import { ConditionValue } from './application/Model/Domain/Enums/ConditionValue.js';
 import { OutputView, OutputViewType } from './application/View/OutputView.js';
+import { InputView, InputViewType } from './application/View/InputView.js';
 
-interface ControllerType {
+
+interface GameControllerType {
     Snake : SnakeType | undefined,
     SnakeService : SnakeServiceType | undefined,
     Documents : DocumentsType,
@@ -17,6 +19,8 @@ interface ControllerType {
     Game : GameType,
     GameService : GameServiceType,
     outputView : OutputViewType,
+    inputView : InputViewType,
+
     removeAllSnakeClass : () => void,
     makeNewPoint : () => void,
     moveFoward : () => void,
@@ -29,13 +33,14 @@ interface ControllerType {
     moveAsync : (keyCode : string) => void,
 }
 
-function Controller(this : ControllerType) {
+function GameController(this : GameControllerType) {
     this.Snake = new Snake();
     this.SnakeService = new SnakeService();
     this.BoardService = new BoardService();
     this.Game = new Game();
     this.GameService = new GameService(),
     this.outputView = new OutputView();
+    this.inputView = new InputView();
 
     this.removeAllSnakeClass = () => {
         for(let i = 0; i < this.Snake.bodys.length; i++) {
@@ -79,6 +84,7 @@ function Controller(this : ControllerType) {
     }
     this.whenOnPoint = () => {
         if(this.SnakeService.onHit(this.Snake)) {
+            this.outputView.setDpPoint(this.Snake.bodys.length);
             this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
             this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
             this.makeNewPoint();
@@ -99,10 +105,11 @@ function Controller(this : ControllerType) {
     }
 }
 
-const controller = new Controller();
-const outputView = new OutputView();
+const controller = new GameController();
 
+controller.inputView.setDifficulty(controller.Game);
 controller.gameStart();
+
 document.addEventListener("keydown", (e) => {
     if (controller.Game.canPlay && 
         KeyCode[e.code] &&

@@ -1,9 +1,17 @@
 enum ClassList {
-    table = "#main__wrapper",
-    snake = "snake",
-    point = "point",
-    gameOverModal = ".gameover__modal__wrapper",
-    tr = "tr",
+    TABLE = "#main__wrapper",
+    SNAKE = "snake",
+    POINT = "point",
+    GAMEOVERMODAL = ".gameover__modal__wrapper",
+    TR = "tr",
+    OPTIC = "optic",
+    BLUE = "blue",
+    YELLOW = "yellow",
+    PURPLE = "purple",
+    RED = "red",
+    DP_POINT = "dp__point",
+    NOMAL = ".nomal",
+    HARD = ".hard",
 };
 
 export {ClassList};

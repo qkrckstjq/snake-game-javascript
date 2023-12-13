@@ -16,8 +16,11 @@ Object.defineProperty(exports, "__esModule", ({
 exports.Documents = void 0;
 var ClassList_js_1 = __webpack_require__(/*! ./Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
 var Documents = {
-  table: document.querySelector(ClassList_js_1.ClassList.table),
-  position: document.getElementsByTagName("tr")
+  table: document.querySelector(ClassList_js_1.ClassList.TABLE),
+  position: document.getElementsByTagName(ClassList_js_1.ClassList.TR),
+  dpElement: document.getElementsByClassName(ClassList_js_1.ClassList.DP_POINT),
+  normalButton: document.querySelector(ClassList_js_1.ClassList.NOMAL),
+  hardButton: document.querySelector(ClassList_js_1.ClassList.HARD)
 };
 exports.Documents = Documents;
 
@@ -37,11 +40,19 @@ Object.defineProperty(exports, "__esModule", ({
 exports.ClassList = void 0;
 var ClassList;
 (function (ClassList) {
-  ClassList["table"] = "#main__wrapper";
-  ClassList["snake"] = "snake";
-  ClassList["point"] = "point";
-  ClassList["gameOverModal"] = ".gameover__modal__wrapper";
-  ClassList["tr"] = "tr";
+  ClassList["TABLE"] = "#main__wrapper";
+  ClassList["SNAKE"] = "snake";
+  ClassList["POINT"] = "point";
+  ClassList["GAMEOVERMODAL"] = ".gameover__modal__wrapper";
+  ClassList["TR"] = "tr";
+  ClassList["OPTIC"] = "optic";
+  ClassList["BLUE"] = "blue";
+  ClassList["YELLOW"] = "yellow";
+  ClassList["PURPLE"] = "purple";
+  ClassList["RED"] = "red";
+  ClassList["DP_POINT"] = "dp__point";
+  ClassList["NOMAL"] = ".nomal";
+  ClassList["HARD"] = ".hard";
 })(ClassList || (exports.ClassList = ClassList = {}));
 ;
 
@@ -335,6 +346,36 @@ exports.SnakeService = SnakeService;
 
 /***/ }),
 
+/***/ "./compile/application/View/InputView.js":
+/*!***********************************************!*\
+  !*** ./compile/application/View/InputView.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.InputView = void 0;
+var Documents_1 = __webpack_require__(/*! ../Model/Domain/Documents */ "./compile/application/Model/Domain/Documents.js");
+var ConditionValue_1 = __webpack_require__(/*! ../Model/Domain/Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+function InputView() {
+  this.setDifficulty = function (Game) {
+    var normalCallback = function normalCallback() {
+      Game.speed = ConditionValue_1.ConditionValue.normal;
+    };
+    var hardCallback = function hardCallback() {
+      Game.speed = ConditionValue_1.ConditionValue.hard;
+    };
+    Documents_1.Documents.normalButton.addEventListener('click', normalCallback);
+    Documents_1.Documents.hardButton.addEventListener('click', hardCallback);
+  };
+}
+exports.InputView = InputView;
+
+/***/ }),
+
 /***/ "./compile/application/View/OutputView.js":
 /*!************************************************!*\
   !*** ./compile/application/View/OutputView.js ***!
@@ -351,16 +392,25 @@ var Documents_1 = __webpack_require__(/*! ../Model/Domain/Documents */ "./compil
 var ClassList_1 = __webpack_require__(/*! ../Model/Domain/Enums/ClassList */ "./compile/application/Model/Domain/Enums/ClassList.js");
 function OutputView() {
   this.addClassSnake = function (y, x) {
-    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.snake);
+    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.SNAKE);
   };
   this.removeClassSnake = function (y, x) {
-    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.snake);
+    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.SNAKE);
   };
   this.addClassPoint = function (y, x) {
-    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.point);
+    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.POINT);
   };
   this.removeClassPoint = function (y, x) {
-    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.point);
+    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.POINT);
+  };
+  this.addClassColor = function (y, x, color) {
+    Documents_1.Documents.position[y].children[x].classList.add(color);
+  };
+  this.removeClassColor = function (y, x, color) {
+    Documents_1.Documents.position[y].children[x].classList.remove(color);
+  };
+  this.setDpPoint = function (point) {
+    Documents_1.Documents.dpElement[0].textContent = "\uC810\uC218 : ".concat(point);
   };
 }
 exports.OutputView = OutputView;
@@ -414,13 +464,15 @@ var Game_js_1 = __webpack_require__(/*! ./application/Model/Domain/Game.js */ ".
 var GameService_js_1 = __webpack_require__(/*! ./application/Model/Service/GameService.js */ "./compile/application/Model/Service/GameService.js");
 var KeyCodeList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
 var OutputView_js_1 = __webpack_require__(/*! ./application/View/OutputView.js */ "./compile/application/View/OutputView.js");
-function Controller() {
+var InputView_js_1 = __webpack_require__(/*! ./application/View/InputView.js */ "./compile/application/View/InputView.js");
+function GameController() {
   var _this = this;
   this.Snake = new Snake_js_1.Snake();
   this.SnakeService = new SnakeService_js_1.SnakeService();
   this.BoardService = new BoardService_js_1.BoardService();
   this.Game = new Game_js_1.Game();
   this.GameService = new GameService_js_1.GameService(), this.outputView = new OutputView_js_1.OutputView();
+  this.inputView = new InputView_js_1.InputView();
   this.removeAllSnakeClass = function () {
     for (var i = 0; i < _this.Snake.bodys.length; i++) {
       _this.outputView.removeClassSnake(_this.Snake.bodys[i][0], _this.Snake.bodys[i][1]);
@@ -463,6 +515,7 @@ function Controller() {
   };
   this.whenOnPoint = function () {
     if (_this.SnakeService.onHit(_this.Snake)) {
+      _this.outputView.setDpPoint(_this.Snake.bodys.length);
       _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
       _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
       _this.makeNewPoint();
@@ -480,8 +533,8 @@ function Controller() {
     _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.whenOnPoint]);
   };
 }
-var controller = new Controller();
-var outputView = new OutputView_js_1.OutputView();
+var controller = new GameController();
+controller.inputView.setDifficulty(controller.Game);
 controller.gameStart();
 document.addEventListener("keydown", function (e) {
   if (controller.Game.canPlay && KeyCodeList_js_1.KeyCode[e.code] && controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)) {

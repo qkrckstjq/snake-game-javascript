@@ -8,7 +8,8 @@ var Game_js_1 = require("./application/Model/Domain/Game.js");
 var GameService_js_1 = require("./application/Model/Service/GameService.js");
 var KeyCodeList_js_1 = require("./application/Model/Domain/Enums/KeyCodeList.js");
 var OutputView_js_1 = require("./application/View/OutputView.js");
-function Controller() {
+var InputView_js_1 = require("./application/View/InputView.js");
+function GameController() {
     var _this = this;
     this.Snake = new Snake_js_1.Snake();
     this.SnakeService = new SnakeService_js_1.SnakeService();
@@ -16,6 +17,7 @@ function Controller() {
     this.Game = new Game_js_1.Game();
     this.GameService = new GameService_js_1.GameService(),
         this.outputView = new OutputView_js_1.OutputView();
+    this.inputView = new InputView_js_1.InputView();
     this.removeAllSnakeClass = function () {
         for (var i = 0; i < _this.Snake.bodys.length; i++) {
             _this.outputView.removeClassSnake(_this.Snake.bodys[i][0], _this.Snake.bodys[i][1]);
@@ -58,6 +60,7 @@ function Controller() {
     };
     this.whenOnPoint = function () {
         if (_this.SnakeService.onHit(_this.Snake)) {
+            _this.outputView.setDpPoint(_this.Snake.bodys.length);
             _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
             _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
             _this.makeNewPoint();
@@ -77,8 +80,8 @@ function Controller() {
         ]);
     };
 }
-var controller = new Controller();
-var outputView = new OutputView_js_1.OutputView();
+var controller = new GameController();
+controller.inputView.setDifficulty(controller.Game);
 controller.gameStart();
 document.addEventListener("keydown", function (e) {
     if (controller.Game.canPlay &&
