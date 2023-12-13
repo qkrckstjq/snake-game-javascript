@@ -1,21 +1,26 @@
-import { ConditionValue } from "./Enums/ConditionValue.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Snake = void 0;
+var ConditionValue_js_1 = require("./Enums/ConditionValue.js");
 function Snake() {
-    this.startX = ConditionValue.startX;
-    this.startY = ConditionValue.startY;
+    var _this = this;
+    this.startX = ConditionValue_js_1.ConditionValue.startX;
+    this.startY = ConditionValue_js_1.ConditionValue.startY;
     this.stateRight = true;
     this.stateLeft = true;
     this.stateUp = true;
     this.stateDown = true;
-    this.bodys = [[ConditionValue.startY, ConditionValue.startX]];
-    this.pointYX = [ConditionValue.startX, ConditionValue.startY];
+    this.bodys = [[ConditionValue_js_1.ConditionValue.startY, ConditionValue_js_1.ConditionValue.startX]];
+    this.pointYX = [ConditionValue_js_1.ConditionValue.startX, ConditionValue_js_1.ConditionValue.startY];
     this.nowProgressed = undefined;
-    this.onX = ConditionValue.startX;
-    this.onY = ConditionValue.startY;
-    this.getLastY = () => {
-        return this.bodys[this.bodys.length - 1][0];
+    this.onX = ConditionValue_js_1.ConditionValue.startX;
+    this.onY = ConditionValue_js_1.ConditionValue.startY;
+    // this.canChangeDirection = true;
+    this.getLastY = function () {
+        return _this.bodys[_this.bodys.length - 1][0];
     };
-    this.getLastX = () => {
-        return this.bodys[this.bodys.length - 1][1];
+    this.getLastX = function () {
+        return _this.bodys[_this.bodys.length - 1][1];
     };
 }
-export { Snake };
+exports.Snake = Snake;

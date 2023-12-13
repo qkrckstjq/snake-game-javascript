@@ -19,9 +19,14 @@ interface ControllerType {
     addClassPoint : (y : number, x : number) => void,
     removeClassSnake : (y : number, x : number) => void,
     removeClassPoint : (y : number, x : number) => void,
+    removeAllSnakeClass : () => void,
+    moveFoward : () => void,
     gameStart : () => void,
     gameInit : () => void,
+    whenOver : () => void,
+    checkOver : () => void,
     move : (keyCode : string) => void, 
+    moveAsync : (keyCode : string) => void,
 }
 
 function Controller(this : ControllerType) {
@@ -42,41 +47,63 @@ function Controller(this : ControllerType) {
     this.removeClassPoint = (y, x) => {
         Documents.position[y].children[x].classList.remove(ClassList.point);
     };
+    this.removeAllSnakeClass = () => {
+        for(let i = 0; i < this.Snake.bodys.length; i++) {
+            Documents.position[this.Snake.bodys[i][0]].children[this.Snake.bodys[i][1]].classList.remove(ClassList.snake);
+        }
+    };
+    this.moveFoward = () => {
+        this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
+        this.addClassSnake(this.Snake.onY, this.Snake.onX);
+        this.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
+        this.SnakeService.removeSnake(this.Snake);   
+    }
+
     this.gameStart = () => {
         this.BoardService.initTable(Documents.table);
         this.gameInit();
     },
     this.gameInit = () => {
-        // Controller.Snake.onY = ConditionValue.startY;
-        // Controller.Snake.onX = ConditionValue.startX;
-        // Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
-        // Controller.Snake.pointYX = Controller.BoardService.makePoint();
+        this.GameService.setGameState(this.Game, true);
         this.SnakeService.initSnake(this.Snake, this.BoardService);
         this.addClassSnake(this.Snake.startY, this.Snake.startX);
         this.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
     };
-    this.move = (keyCode) => {  
-        if(KeyCode[keyCode]) {
-            if(this.SnakeService.canMove(keyCode, this.Snake)) {
-                if(this.SnakeService.checkOver(this.Snake, Documents.position)) {
-                    
-                }
-                this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
-                this.addClassSnake(this.Snake.onY, this.Snake.onX);
-                this.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
-                this.SnakeService.removeSnake(this.Snake);
-            }
+    this.whenOver = () => {
+        clearInterval(this.Snake.nowProgressed);
+        this.GameService.setGameState(this.Game,false);
+        this.removeAllSnakeClass();
+        this.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.gameInit();
+    };
+    this.checkOver = () => {
+        if(this.SnakeService.checkOver(this.Snake, Documents.position)) {
+            this.whenOver();
+            return;
         }
+        this.moveFoward();
     }
-
+    this.move = (keyCode) => {  
+        if(this.SnakeService.move(keyCode, this.Snake)) {
+            this.checkOver();
+        }
+    };
+    this.moveAsync = (keyCode) => {
+        this.SnakeService.moveAsync(keyCode, this.Snake, this.Game, [this.checkOver]);
+    }
 }
 
 const controller = new Controller();
 
 controller.gameStart();
 document.addEventListener("keydown", (e) => {
-    if (controller.Game.canPlay) {
+    if (controller.Game.canPlay && 
+        KeyCode[e.code] &&
+        controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)
+    ) {
+        clearInterval(controller.Snake.nowProgressed);
         controller.move(e.code);
+        controller.moveAsync(e.code);
     }
 });
 

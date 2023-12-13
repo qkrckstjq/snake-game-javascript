@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // "lib": ["es2023"],
-    "target": "ES6", //어떤버전의 js로 컴파일할지 정의
+    "target": "ES5", //어떤버전의 js로 컴파일할지 정의
     // "jsx": "react-jsx" //jsx 문법 허용
     // "noEmit": true,
     // "allowImportingTsExtensions": true,

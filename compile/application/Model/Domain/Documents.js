@@ -1,6 +1,9 @@
-import { ClassList } from "./Enums/ClassList.js";
-const Documents = {
-    table: document.querySelector(ClassList.table),
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Documents = void 0;
+var ClassList_js_1 = require("./Enums/ClassList.js");
+var Documents = {
+    table: document.querySelector(ClassList_js_1.ClassList.table),
     position: document.getElementsByTagName("tr"),
 };
-export { Documents };
+exports.Documents = Documents;

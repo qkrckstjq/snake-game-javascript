@@ -1,60 +1,85 @@
-import { BoardService } from './application/Model/Service/BoardService.js';
-import { Documents } from './application/Model/Domain/Documents.js';
-import { Snake } from './application/Model/Domain/Snake.js';
-import { SnakeService } from './application/Model/Service/SnakeService.js';
-import { Game } from './application/Model/Domain/Game.js';
-import { GameService } from './application/Model/Service/GameService.js';
-import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
-import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var BoardService_js_1 = require("./application/Model/Service/BoardService.js");
+var Documents_js_1 = require("./application/Model/Domain/Documents.js");
+var Snake_js_1 = require("./application/Model/Domain/Snake.js");
+var SnakeService_js_1 = require("./application/Model/Service/SnakeService.js");
+var Game_js_1 = require("./application/Model/Domain/Game.js");
+var GameService_js_1 = require("./application/Model/Service/GameService.js");
+var KeyCodeList_js_1 = require("./application/Model/Domain/Enums/KeyCodeList.js");
+var ClassList_js_1 = require("./application/Model/Domain/Enums/ClassList.js");
 function Controller() {
-    this.Snake = new Snake();
-    this.SnakeService = new SnakeService();
-    this.BoardService = new BoardService();
-    this.Game = new Game();
-    this.GameService = new GameService(),
-        this.addClassSnake = (y, x) => {
-            Documents.position[y].children[x].classList.add(ClassList.snake);
+    var _this = this;
+    this.Snake = new Snake_js_1.Snake();
+    this.SnakeService = new SnakeService_js_1.SnakeService();
+    this.BoardService = new BoardService_js_1.BoardService();
+    this.Game = new Game_js_1.Game();
+    this.GameService = new GameService_js_1.GameService(),
+        this.addClassSnake = function (y, x) {
+            Documents_js_1.Documents.position[y].children[x].classList.add(ClassList_js_1.ClassList.snake);
         };
-    this.addClassPoint = (y, x) => {
-        Documents.position[y].children[x].classList.add(ClassList.point);
+    this.addClassPoint = function (y, x) {
+        Documents_js_1.Documents.position[y].children[x].classList.add(ClassList_js_1.ClassList.point);
     };
-    this.removeClassSnake = (y, x) => {
-        Documents.position[y].children[x].classList.remove(ClassList.snake);
+    this.removeClassSnake = function (y, x) {
+        Documents_js_1.Documents.position[y].children[x].classList.remove(ClassList_js_1.ClassList.snake);
     };
-    this.removeClassPoint = (y, x) => {
-        Documents.position[y].children[x].classList.remove(ClassList.point);
+    this.removeClassPoint = function (y, x) {
+        Documents_js_1.Documents.position[y].children[x].classList.remove(ClassList_js_1.ClassList.point);
     };
-    this.gameStart = () => {
-        this.BoardService.initTable(Documents.table);
-        this.gameInit();
-    },
-        this.gameInit = () => {
-            // Controller.Snake.onY = ConditionValue.startY;
-            // Controller.Snake.onX = ConditionValue.startX;
-            // Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
-            // Controller.Snake.pointYX = Controller.BoardService.makePoint();
-            this.SnakeService.initSnake(this.Snake, this.BoardService);
-            this.addClassSnake(this.Snake.startY, this.Snake.startX);
-            this.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
-        };
-    this.move = (keyCode) => {
-        if (KeyCode[keyCode]) {
-            if (this.SnakeService.canMove(keyCode, this.Snake)) {
-                if (this.SnakeService.checkOver(this.Snake, Documents.position)) {
-                }
-                this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
-                this.addClassSnake(this.Snake.onY, this.Snake.onX);
-                this.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
-                this.SnakeService.removeSnake(this.Snake);
-            }
+    this.removeAllSnakeClass = function () {
+        for (var i = 0; i < _this.Snake.bodys.length; i++) {
+            Documents_js_1.Documents.position[_this.Snake.bodys[i][0]].children[_this.Snake.bodys[i][1]].classList.remove(ClassList_js_1.ClassList.snake);
         }
     };
+    this.moveFoward = function () {
+        _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
+        _this.addClassSnake(_this.Snake.onY, _this.Snake.onX);
+        _this.removeClassSnake(_this.Snake.getLastY(), _this.Snake.getLastX());
+        _this.SnakeService.removeSnake(_this.Snake);
+    };
+    this.gameStart = function () {
+        _this.BoardService.initTable(Documents_js_1.Documents.table);
+        _this.gameInit();
+    },
+        this.gameInit = function () {
+            _this.GameService.setGameState(_this.Game, true);
+            _this.SnakeService.initSnake(_this.Snake, _this.BoardService);
+            _this.addClassSnake(_this.Snake.startY, _this.Snake.startX);
+            _this.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+        };
+    this.whenOver = function () {
+        clearInterval(_this.Snake.nowProgressed);
+        _this.GameService.setGameState(_this.Game, false);
+        _this.removeAllSnakeClass();
+        _this.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+        _this.gameInit();
+    };
+    this.checkOver = function () {
+        if (_this.SnakeService.checkOver(_this.Snake, Documents_js_1.Documents.position)) {
+            _this.whenOver();
+            return;
+        }
+        _this.moveFoward();
+    };
+    this.move = function (keyCode) {
+        if (_this.SnakeService.move(keyCode, _this.Snake)) {
+            _this.checkOver();
+        }
+    };
+    this.moveAsync = function (keyCode) {
+        _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.checkOver]);
+    };
 }
-const controller = new Controller();
+var controller = new Controller();
 controller.gameStart();
-document.addEventListener("keydown", (e) => {
-    if (controller.Game.canPlay) {
+document.addEventListener("keydown", function (e) {
+    if (controller.Game.canPlay &&
+        KeyCodeList_js_1.KeyCode[e.code] &&
+        controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)) {
+        clearInterval(controller.Snake.nowProgressed);
         controller.move(e.code);
+        controller.moveAsync(e.code);
     }
 });
 // const table = document.querySelector('#main__wrapper');

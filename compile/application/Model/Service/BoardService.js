@@ -1,21 +1,24 @@
-import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BoardService = void 0;
+var ConditionValue_js_1 = require("../Domain/Enums/ConditionValue.js");
 function BoardService() {
-    this.initTable = (element) => {
-        for (let i = 0; i < ConditionValue.col; i++) {
-            const tr = document.createElement('tr');
+    this.initTable = function (element) {
+        for (var i = 0; i < ConditionValue_js_1.ConditionValue.col; i++) {
+            var tr = document.createElement('tr');
             element.append(tr);
-            for (let j = 0; j < ConditionValue.row; j++) {
-                const td = document.createElement('td');
+            for (var j = 0; j < ConditionValue_js_1.ConditionValue.row; j++) {
+                var td = document.createElement('td');
                 document.getElementsByTagName('tr')[i].append(td);
             }
         }
     };
-    this.makePoint = (Snake) => {
+    this.makePoint = function (Snake) {
         while (true) {
-            const numX = Math.floor(Math.random() * (ConditionValue.row - 1));
-            const numY = Math.floor(Math.random() * (ConditionValue.col - 1));
-            const snakes = Snake.bodys;
-            for (let i in snakes) {
+            var numX = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.row - 1));
+            var numY = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.col - 1));
+            var snakes = Snake.bodys;
+            for (var i in snakes) {
                 if (numY == snakes[i][0] && numX == snakes[i][1]) {
                     continue;
                 }
@@ -24,4 +27,4 @@ function BoardService() {
         }
     };
 }
-export { BoardService };
+exports.BoardService = BoardService;

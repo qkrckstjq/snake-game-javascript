@@ -1,9 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GameService = void 0;
 function GameService() {
-    this.setGameState = (Game, state) => {
+    this.setGameState = function (Game, state) {
         Game.canPlay = state;
     };
-    this.setGameProceeding = (Game, state) => {
+    this.setGameProceeding = function (Game, state) {
         Game.isProceeding = state;
     };
 }
-export { GameService };
+exports.GameService = GameService;

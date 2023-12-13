@@ -11,9 +11,10 @@ interface SnakeType {
     stateDown : boolean,
     bodys : number[][],
     pointYX : number[],
-    nowProgressed : number | undefined,
+    nowProgressed : number | undefined,//비동기함수ID
     onX : number,
     onY : number,
+    // canChangeDirection : boolean,
     getLastY : ()=>number,
     getLastX : ()=>number,
 }
@@ -30,6 +31,7 @@ function Snake (this:SnakeType) {
     this.nowProgressed = undefined;
     this.onX = ConditionValue.startX;
     this.onY = ConditionValue.startY;
+    // this.canChangeDirection = true;
     this.getLastY = () => {
         return this.bodys[this.bodys.length-1][0];
     };
