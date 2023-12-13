@@ -3,11 +3,12 @@ import { ConditionValue } from '../Domain/Enums/ConditionValue.js';
 import { Documents } from '../Domain/Documents.js';
 import { KeyCode } from '../Domain/Enums/KeyCodeList.js';
 import { Snake, SnakeType } from '../Domain/Snake.js';
+import { BoardService, BoardServiceType } from './BoardService.js';
 
 interface SnakeServiceType {
-    initBodys : () => number[],
-    checkOver : (x : number, y : number, element:HTMLElement) => boolean,
-    move : (inputCode : string, Snake : SnakeType) => boolean,
+    initSnake : (Snake : SnakeType, BoardService : BoardServiceType) => void,
+    checkOver : (Snake : SnakeType, element:HTMLCollectionOf<HTMLTableRowElement>) => boolean,
+    canMove : (inputCode : string, Snake : SnakeType) => boolean,
     onHit : (Snake : SnakeType) => boolean,
     addSnake : (Snake:SnakeType, y : number, x : number) => void
     removeSnake : (Snake : SnakeType) => void
@@ -20,19 +21,22 @@ const SnakeService:SnakeServiceType = {
     removeSnake : (Snake) => {
         Snake.bodys.pop();
     },
-    initBodys : () => {
-        return [ConditionValue.startY, ConditionValue.startX];
+    initSnake : (Snake, BoardService) => {
+        Snake.onX = ConditionValue.startX;
+        Snake.onY = ConditionValue.startY;
+        Snake.bodys = [[ConditionValue.startY, ConditionValue.startX]];
+        Snake.pointYX = BoardService.makePoint();
     },
-    checkOver : (x, y, element) => {
-        if((x >= ConditionValue.row || 
-            y >= ConditionValue.col || 
-            x < 0 || 
-            y < 0) ||
-            element[y].children[x].classList.contains('snake')) {//벽, 자기자신의 몸통에 충돌시 over함수 작동
-            return true                                                      //setinterval 동작에서는 필요없지만 동기적으로 작동하는 움직임에서는 over가 작동시 true를 리턴
+    checkOver : (Snake, element) => {
+        if((Snake.onX >= ConditionValue.row || 
+            Snake.onY >= ConditionValue.col || 
+            Snake.onX < 0 || 
+            Snake.onY < 0) ||
+            element[Snake.onY].children[Snake.onX].classList.contains('snake')) {
+            return true;
         }
     },
-    move : (inputCode, Snake) => {
+    canMove : (inputCode, Snake) => {
         Snake.nowProgressed && clearInterval(Snake.nowProgressed);
         if(inputCode == KeyCode.ArrowRight && Snake.stateRight) {
             Snake.stateRight = false;

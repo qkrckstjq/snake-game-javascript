@@ -2,7 +2,8 @@ import { BoardService, BoardServiceType } from './application/Model/Service/Boar
 import { Documents, DocumentsType } from './application/Model/Domain/Documents.js';
 import { Snake, SnakeType } from './application/Model/Domain/Snake.js';
 import { SnakeService, SnakeServiceType } from './application/Model/Service/SnakeService.js';
-import { Game } from './application/Model/Domain/Game.js';
+import { Game, GameType } from './application/Model/Domain/Game.js';
+import { GameService, GameServiceType } from './application/Model/Service/GameService.js';
 import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
 import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
 import { ConditionValue } from './application/Model/Domain/Enums/ConditionValue.js';
@@ -12,6 +13,8 @@ interface ControllerType {
     SnakeService : SnakeServiceType | undefined,
     Documents : DocumentsType,
     BoardService : BoardServiceType,
+    Game : GameType,
+    GameService : GameServiceType,
     addClassSnake : (y : number, x : number) => void,
     addClassPoint : (y : number, x : number) => void,
     removeClassSnake : (y : number, x : number) => void,
@@ -26,6 +29,8 @@ const Controller:ControllerType = {
     SnakeService : SnakeService,
     Documents : Documents,
     BoardService : BoardService,
+    Game : Game,
+    GameService : GameService,
     addClassSnake : (y,x) => {
         Controller.Documents.position[y].children[x].classList.add(ClassList.snake);
     },
@@ -43,19 +48,22 @@ const Controller:ControllerType = {
         Controller.gameInit();
     },
     gameInit : () => {
-        Controller.Snake.onY = ConditionValue.startY;
-        Controller.Snake.onX = ConditionValue.startX;
-        Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
-        Controller.Snake.pointYX = Controller.BoardService.makePoint();
+        // Controller.Snake.onY = ConditionValue.startY;
+        // Controller.Snake.onX = ConditionValue.startX;
+        // Controller.Snake.bodys = [Controller.SnakeService.initBodys()];
+        // Controller.Snake.pointYX = Controller.BoardService.makePoint();
+        Controller.SnakeService.initSnake(Snake, BoardService);
         Controller.addClassSnake(Controller.Snake.startY, Controller.Snake.startX);
         Controller.addClassPoint(Controller.Snake.pointYX[0], Controller.Snake.pointYX[1]);
     },
     move : (keyCode) => {  
         if(KeyCode[keyCode]) {
-            if(Controller.SnakeService.move(keyCode, Controller.Snake)) {;
+            if(Controller.SnakeService.canMove(keyCode, Controller.Snake)) {
+                if(Controller.SnakeService.checkOver(Controller.Snake, Documents.position)) {
+                    
+                }
                 Controller.SnakeService.addSnake(Controller.Snake, Controller.Snake.onY, Controller.Snake.onX);
                 Controller.addClassSnake(Controller.Snake.onY, Controller.Snake.onX);
-                console.log(Snake.bodys);
                 Controller.removeClassSnake(Controller.Snake.getLastY(), Controller.Snake.getLastX());
                 Controller.SnakeService.removeSnake(Controller.Snake);
             }
@@ -66,7 +74,10 @@ const Controller:ControllerType = {
 
 Controller.gameStart();
 document.addEventListener("keydown", (e) => {
-    Controller.move(e.code);
+    if (Controller.Game.canPlay) {
+        Controller.move(e.code);
+
+    }
 });
 
 

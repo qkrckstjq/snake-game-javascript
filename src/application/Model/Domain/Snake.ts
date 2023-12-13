@@ -18,14 +18,14 @@ interface SnakeType {
     getLastX : ()=>number,
 }
 
-const Snake:SnakeType = {
-    startX : ConditionValue.startX,
-    startY : ConditionValue.startY,
-    stateRight : true,
-    stateLeft : true,
-    stateUp : true,
+function Snake () {
+    this.startX = ConditionValue.startX,
+    this.startY = ConditionValue.startY,
+    this.stateRight = true,
+    this.stateLeft = true,
+    this.stateUp : true,
     stateDown : true,
-    bodys : [[ConditionValue.startY, ConditionValue.startX], [1,2], [1,2,3,4]],
+    bodys : [[ConditionValue.startY, ConditionValue.startX]],
     pointYX : [ConditionValue.startX, ConditionValue.startY],
     nowProgressed : undefined,
     onX : ConditionValue.startX,

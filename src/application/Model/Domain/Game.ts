@@ -7,11 +7,16 @@ interface GameType {
     point : number,
     isModal : boolean,
     speed : number,
+    isProceeding : boolean,
+    canPlay : boolean,
 }
 
-const Game = {
+const Game:GameType = {
     point : 0,
     isModal : false,
+    speed : ConditionValue.normal,
+    isProceeding : false,
+    canPlay : true,
 }
 
-export {Game};
+export {Game, GameType};
