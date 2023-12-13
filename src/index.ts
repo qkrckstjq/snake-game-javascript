@@ -7,6 +7,7 @@ import { GameService, GameServiceType } from './application/Model/Service/GameSe
 import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
 import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
 import { ConditionValue } from './application/Model/Domain/Enums/ConditionValue.js';
+import { OutputView, OutputViewType } from './application/View/OutputView.js';
 
 interface ControllerType {
     Snake : SnakeType | undefined,
@@ -15,11 +16,9 @@ interface ControllerType {
     BoardService : BoardServiceType,
     Game : GameType,
     GameService : GameServiceType,
-    addClassSnake : (y : number, x : number) => void,
-    addClassPoint : (y : number, x : number) => void,
-    removeClassSnake : (y : number, x : number) => void,
-    removeClassPoint : (y : number, x : number) => void,
+    outputView : OutputViewType,
     removeAllSnakeClass : () => void,
+    makeNewPoint : () => void,
     moveFoward : () => void,
     gameStart : () => void,
     gameInit : () => void,
@@ -36,27 +35,21 @@ function Controller(this : ControllerType) {
     this.BoardService = new BoardService();
     this.Game = new Game();
     this.GameService = new GameService(),
-    this.addClassSnake = (y,x) => {
-        Documents.position[y].children[x].classList.add(ClassList.snake);
-    };
-    this.addClassPoint = (y, x) => {
-        Documents.position[y].children[x].classList.add(ClassList.point);
-    };
-    this.removeClassSnake = (y, x) => {
-        Documents.position[y].children[x].classList.remove(ClassList.snake);
-    };
-    this.removeClassPoint = (y, x) => {
-        Documents.position[y].children[x].classList.remove(ClassList.point);
-    };
+    this.outputView = new OutputView();
+
     this.removeAllSnakeClass = () => {
         for(let i = 0; i < this.Snake.bodys.length; i++) {
-            Documents.position[this.Snake.bodys[i][0]].children[this.Snake.bodys[i][1]].classList.remove(ClassList.snake);
+            this.outputView.removeClassSnake(this.Snake.bodys[i][0], this.Snake.bodys[i][1]);
         }
+    };
+    this.makeNewPoint = () => {
+        this.SnakeService.makePoint(this.Snake, this.BoardService);
+        this.outputView.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
     };
     this.moveFoward = () => {
         this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
-        this.addClassSnake(this.Snake.onY, this.Snake.onX);
-        this.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
+        this.outputView.addClassSnake(this.Snake.onY, this.Snake.onX);
+        this.outputView.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
         this.SnakeService.removeSnake(this.Snake);   
     };
     this.gameStart = () => {
@@ -66,15 +59,15 @@ function Controller(this : ControllerType) {
     this.gameInit = () => {
         this.GameService.setGameState(this.Game, true);
         this.SnakeService.initSnake(this.Snake, this.BoardService);
-        this.addClassSnake(this.Snake.startY, this.Snake.startX);
-        this.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.outputView.addClassSnake(this.Snake.startY, this.Snake.startX);
+        this.outputView.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
         this.SnakeService.initState(this.Snake);
     };
     this.whenOver = () => {
         clearInterval(this.Snake.nowProgressed);
         this.GameService.setGameState(this.Game,false);
         this.removeAllSnakeClass();
-        this.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
         this.gameInit();
     };
     this.checkOver = () => {
@@ -87,6 +80,8 @@ function Controller(this : ControllerType) {
     this.whenOnPoint = () => {
         if(this.SnakeService.onHit(this.Snake)) {
             this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
+            this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+            this.makeNewPoint();
             this.moveFoward();
             return;
         }
@@ -105,6 +100,7 @@ function Controller(this : ControllerType) {
 }
 
 const controller = new Controller();
+const outputView = new OutputView();
 
 controller.gameStart();
 document.addEventListener("keydown", (e) => {

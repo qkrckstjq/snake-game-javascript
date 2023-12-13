@@ -15,7 +15,8 @@ interface SnakeServiceType {
     moveAsync : (keyCode : string, Snake : SnakeType, Game:GameType, callback : (() => void)[]) => void,
     onHit : (Snake : SnakeType) => boolean,
     checkCanChangeDirection : (Snake : SnakeType, keyCode : string) => boolean,
-    initState : (Snake : SnakeType) => void
+    initState : (Snake : SnakeType) => void,
+    makePoint : (Snake : SnakeType, BoardService : BoardServiceType) => void
 }
 
 function SnakeService(this:SnakeServiceType) {
@@ -115,6 +116,9 @@ function SnakeService(this:SnakeServiceType) {
         Snake.stateLeft = true;
         Snake.stateUp = true;
         Snake.stateDown = true;
+    };
+    this.makePoint = (Snake, BoardService) => {
+        Snake.pointYX = BoardService.makePoint(Snake);
     }
 
 }

@@ -104,5 +104,8 @@ function SnakeService() {
         Snake.stateUp = true;
         Snake.stateDown = true;
     };
+    this.makePoint = function (Snake, BoardService) {
+        Snake.pointYX = BoardService.makePoint(Snake);
+    };
 }
 exports.SnakeService = SnakeService;

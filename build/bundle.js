@@ -327,8 +327,43 @@ function SnakeService() {
     Snake.stateUp = true;
     Snake.stateDown = true;
   };
+  this.makePoint = function (Snake, BoardService) {
+    Snake.pointYX = BoardService.makePoint(Snake);
+  };
 }
 exports.SnakeService = SnakeService;
+
+/***/ }),
+
+/***/ "./compile/application/View/OutputView.js":
+/*!************************************************!*\
+  !*** ./compile/application/View/OutputView.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.OutputView = void 0;
+var Documents_1 = __webpack_require__(/*! ../Model/Domain/Documents */ "./compile/application/Model/Domain/Documents.js");
+var ClassList_1 = __webpack_require__(/*! ../Model/Domain/Enums/ClassList */ "./compile/application/Model/Domain/Enums/ClassList.js");
+function OutputView() {
+  this.addClassSnake = function (y, x) {
+    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.snake);
+  };
+  this.removeClassSnake = function (y, x) {
+    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.snake);
+  };
+  this.addClassPoint = function (y, x) {
+    Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.point);
+  };
+  this.removeClassPoint = function (y, x) {
+    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.point);
+  };
+}
+exports.OutputView = OutputView;
 
 /***/ })
 
@@ -378,34 +413,27 @@ var SnakeService_js_1 = __webpack_require__(/*! ./application/Model/Service/Snak
 var Game_js_1 = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
 var GameService_js_1 = __webpack_require__(/*! ./application/Model/Service/GameService.js */ "./compile/application/Model/Service/GameService.js");
 var KeyCodeList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
-var ClassList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+var OutputView_js_1 = __webpack_require__(/*! ./application/View/OutputView.js */ "./compile/application/View/OutputView.js");
 function Controller() {
   var _this = this;
   this.Snake = new Snake_js_1.Snake();
   this.SnakeService = new SnakeService_js_1.SnakeService();
   this.BoardService = new BoardService_js_1.BoardService();
   this.Game = new Game_js_1.Game();
-  this.GameService = new GameService_js_1.GameService(), this.addClassSnake = function (y, x) {
-    Documents_js_1.Documents.position[y].children[x].classList.add(ClassList_js_1.ClassList.snake);
-  };
-  this.addClassPoint = function (y, x) {
-    Documents_js_1.Documents.position[y].children[x].classList.add(ClassList_js_1.ClassList.point);
-  };
-  this.removeClassSnake = function (y, x) {
-    Documents_js_1.Documents.position[y].children[x].classList.remove(ClassList_js_1.ClassList.snake);
-  };
-  this.removeClassPoint = function (y, x) {
-    Documents_js_1.Documents.position[y].children[x].classList.remove(ClassList_js_1.ClassList.point);
-  };
+  this.GameService = new GameService_js_1.GameService(), this.outputView = new OutputView_js_1.OutputView();
   this.removeAllSnakeClass = function () {
     for (var i = 0; i < _this.Snake.bodys.length; i++) {
-      Documents_js_1.Documents.position[_this.Snake.bodys[i][0]].children[_this.Snake.bodys[i][1]].classList.remove(ClassList_js_1.ClassList.snake);
+      _this.outputView.removeClassSnake(_this.Snake.bodys[i][0], _this.Snake.bodys[i][1]);
     }
+  };
+  this.makeNewPoint = function () {
+    _this.SnakeService.makePoint(_this.Snake, _this.BoardService);
+    _this.outputView.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
   };
   this.moveFoward = function () {
     _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
-    _this.addClassSnake(_this.Snake.onY, _this.Snake.onX);
-    _this.removeClassSnake(_this.Snake.getLastY(), _this.Snake.getLastX());
+    _this.outputView.addClassSnake(_this.Snake.onY, _this.Snake.onX);
+    _this.outputView.removeClassSnake(_this.Snake.getLastY(), _this.Snake.getLastX());
     _this.SnakeService.removeSnake(_this.Snake);
   };
   this.gameStart = function () {
@@ -415,15 +443,15 @@ function Controller() {
   this.gameInit = function () {
     _this.GameService.setGameState(_this.Game, true);
     _this.SnakeService.initSnake(_this.Snake, _this.BoardService);
-    _this.addClassSnake(_this.Snake.startY, _this.Snake.startX);
-    _this.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+    _this.outputView.addClassSnake(_this.Snake.startY, _this.Snake.startX);
+    _this.outputView.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
     _this.SnakeService.initState(_this.Snake);
   };
   this.whenOver = function () {
     clearInterval(_this.Snake.nowProgressed);
     _this.GameService.setGameState(_this.Game, false);
     _this.removeAllSnakeClass();
-    _this.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+    _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
     _this.gameInit();
   };
   this.checkOver = function () {
@@ -436,6 +464,8 @@ function Controller() {
   this.whenOnPoint = function () {
     if (_this.SnakeService.onHit(_this.Snake)) {
       _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
+      _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+      _this.makeNewPoint();
       _this.moveFoward();
       return;
     }
@@ -451,6 +481,7 @@ function Controller() {
   };
 }
 var controller = new Controller();
+var outputView = new OutputView_js_1.OutputView();
 controller.gameStart();
 document.addEventListener("keydown", function (e) {
   if (controller.Game.canPlay && KeyCodeList_js_1.KeyCode[e.code] && controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)) {
