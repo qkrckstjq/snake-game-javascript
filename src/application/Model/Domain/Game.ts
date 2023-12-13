@@ -11,12 +11,12 @@ interface GameType {
     canPlay : boolean,
 }
 
-const Game:GameType = {
-    point : 0,
-    isModal : false,
-    speed : ConditionValue.normal,
-    isProceeding : false,
-    canPlay : true,
+function Game(this : GameType) {
+    this.point = 0;
+    this.isModal = false;
+    this.speed = ConditionValue.normal;
+    this.isProceeding = false;
+    this.canPlay = true;
 }
 
 export {Game, GameType};

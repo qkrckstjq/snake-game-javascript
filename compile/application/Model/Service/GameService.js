@@ -1,9 +1,9 @@
-const GameService = {
-    setGameState: (Game, state) => {
+function GameService() {
+    this.setGameState = (Game, state) => {
         Game.canPlay = state;
-    },
-    setGameProceeding: (Game, state) => {
+    };
+    this.setGameProceeding = (Game, state) => {
         Game.isProceeding = state;
-    },
-};
+    };
+}
 export { GameService };

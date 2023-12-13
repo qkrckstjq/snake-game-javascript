@@ -14,20 +14,20 @@ interface SnakeServiceType {
     removeSnake : (Snake : SnakeType) => void
 }
 
-const SnakeService:SnakeServiceType = {
-    addSnake : (Snake, y, x) => {
+function SnakeService(this:SnakeServiceType) {
+    this.addSnake = (Snake, y, x) => {
         Snake.bodys.unshift([y,x]);
-    },
-    removeSnake : (Snake) => {
+    };
+    this.removeSnake = (Snake) => {
         Snake.bodys.pop();
-    },
-    initSnake : (Snake, BoardService) => {
+    };
+    this.initSnake = (Snake, BoardService) => {
         Snake.onX = ConditionValue.startX;
         Snake.onY = ConditionValue.startY;
         Snake.bodys = [[ConditionValue.startY, ConditionValue.startX]];
-        Snake.pointYX = BoardService.makePoint();
-    },
-    checkOver : (Snake, element) => {
+        Snake.pointYX = BoardService.makePoint(Snake);
+    };
+    this.checkOver = (Snake, element) => {
         if((Snake.onX >= ConditionValue.row || 
             Snake.onY >= ConditionValue.col || 
             Snake.onX < 0 || 
@@ -35,8 +35,8 @@ const SnakeService:SnakeServiceType = {
             element[Snake.onY].children[Snake.onX].classList.contains('snake')) {
             return true;
         }
-    },
-    canMove : (inputCode, Snake) => {
+    }
+    this.canMove = (inputCode, Snake) => {
         Snake.nowProgressed && clearInterval(Snake.nowProgressed);
         if(inputCode == KeyCode.ArrowRight && Snake.stateRight) {
             Snake.stateRight = false;
@@ -68,13 +68,13 @@ const SnakeService:SnakeServiceType = {
             return true;
         }
         return false;
-    },
-    onHit : (Snake) => {
+    };
+    this.onHit = (Snake) => {
         const [pointY, pointX] = Snake.pointYX;
         if(Snake.onY === pointY && Snake.onX === pointX) {
             return true;
         }
-    },
+    };
 }
 
 export { SnakeService, SnakeServiceType };

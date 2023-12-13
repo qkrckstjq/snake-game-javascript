@@ -18,24 +18,24 @@ interface SnakeType {
     getLastX : ()=>number,
 }
 
-function Snake () {
-    this.startX = ConditionValue.startX,
-    this.startY = ConditionValue.startY,
-    this.stateRight = true,
-    this.stateLeft = true,
-    this.stateUp : true,
-    stateDown : true,
-    bodys : [[ConditionValue.startY, ConditionValue.startX]],
-    pointYX : [ConditionValue.startX, ConditionValue.startY],
-    nowProgressed : undefined,
-    onX : ConditionValue.startX,
-    onY : ConditionValue.startY,
-    getLastY : () => {
-        return Snake.bodys[Snake.bodys.length-1][0];
-    },
-    getLastX : () => {
-        return Snake.bodys[Snake.bodys.length-1][1];
-    }
+function Snake (this:SnakeType) {
+    this.startX = ConditionValue.startX;
+    this.startY = ConditionValue.startY;
+    this.stateRight = true;
+    this.stateLeft = true;
+    this.stateUp = true;
+    this.stateDown = true;
+    this.bodys = [[ConditionValue.startY, ConditionValue.startX]];
+    this.pointYX = [ConditionValue.startX, ConditionValue.startY];
+    this.nowProgressed = undefined;
+    this.onX = ConditionValue.startX;
+    this.onY = ConditionValue.startY;
+    this.getLastY = () => {
+        return this.bodys[this.bodys.length-1][0];
+    };
+    this.getLastX = () => {
+        return this.bodys[this.bodys.length-1][1];
+    };
 }
 
 

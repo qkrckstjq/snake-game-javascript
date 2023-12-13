@@ -1,9 +1,9 @@
 import { ConditionValue } from "./Enums/ConditionValue";
-const Game = {
-    point: 0,
-    isModal: false,
-    speed: ConditionValue.normal,
-    isProceeding: false,
-    canPlay: true,
-};
+function Game() {
+    this.point = 0;
+    this.isModal = false;
+    this.speed = ConditionValue.normal;
+    this.isProceeding = false;
+    this.canPlay = true;
+}
 export { Game };

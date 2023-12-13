@@ -1,14 +1,14 @@
 import { Documents } from "../Domain/Documents.js";
 import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
-import { Snake }  from '../Domain/Snake.js';
+import { Snake, SnakeType}  from '../Domain/Snake.js';
 
 interface BoardServiceType {
     initTable : (element : HTMLElement) => void,
-    makePoint : () => number[],
+    makePoint : (Snake : SnakeType) => number[],
 }
 
-const BoardService:BoardServiceType = {
-    initTable : (element) => {
+function BoardService(this : BoardServiceType)  {
+    this.initTable = (element) => {
         for(let i = 0; i < ConditionValue.col; i++){
             const tr = document.createElement('tr');
             element.append(tr);
@@ -17,8 +17,8 @@ const BoardService:BoardServiceType = {
                 document.getElementsByTagName('tr')[i].append(td);
             }
         }
-    },
-    makePoint : () => {
+    };
+    this.makePoint = (Snake) => {
         while(true) {
             const numX:number = Math.floor(Math.random() * (ConditionValue.row-1));
             const numY:number = Math.floor(Math.random() * (ConditionValue.col-1));
@@ -30,7 +30,7 @@ const BoardService:BoardServiceType = {
             }
             return [numY, numX];
         }
-    }
+    };
 }
 
 export { BoardService, BoardServiceType };

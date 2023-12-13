@@ -8,13 +8,13 @@ interface GameServiceType {
     setGameProceeding : (Game : GameType, state : boolean) => void
 }
 
-const GameService:GameServiceType = {
-    setGameState : (Game, state) => {
+function GameService(this:GameServiceType) {
+    this.setGameState = (Game, state) => {
         Game.canPlay = state;
-    },
-    setGameProceeding : (Game, state) => {
+    };
+    this.setGameProceeding = (Game, state) => {
         Game.isProceeding = state;
-    },
+    };
 }
 
 export {GameService, GameServiceType};

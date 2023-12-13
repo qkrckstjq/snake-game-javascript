@@ -1,7 +1,6 @@
 import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
-import { Snake } from '../Domain/Snake.js';
-const BoardService = {
-    initTable: (element) => {
+function BoardService() {
+    this.initTable = (element) => {
         for (let i = 0; i < ConditionValue.col; i++) {
             const tr = document.createElement('tr');
             element.append(tr);
@@ -10,8 +9,8 @@ const BoardService = {
                 document.getElementsByTagName('tr')[i].append(td);
             }
         }
-    },
-    makePoint: () => {
+    };
+    this.makePoint = (Snake) => {
         while (true) {
             const numX = Math.floor(Math.random() * (ConditionValue.row - 1));
             const numY = Math.floor(Math.random() * (ConditionValue.col - 1));
@@ -23,6 +22,6 @@ const BoardService = {
             }
             return [numY, numX];
         }
-    }
-};
+    };
+}
 export { BoardService };
