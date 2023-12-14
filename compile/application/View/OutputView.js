@@ -16,8 +16,11 @@ function OutputView() {
     this.removeClassPoint = function (y, x) {
         Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.POINT);
     };
-    this.addClassColor = function (y, x, color) {
-        Documents_1.Documents.position[y].children[x].classList.add(color);
+    this.removeClassName = function (y, x) {
+        Documents_1.Documents.position[y].children[x].className = "";
+    };
+    this.setTableColor = function (color) {
+        Documents_1.Documents.table.className = color;
     };
     this.removeClassColor = function (y, x, color) {
         Documents_1.Documents.position[y].children[x].classList.remove(color);

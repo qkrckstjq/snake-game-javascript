@@ -6,7 +6,8 @@ interface OutputViewType {
     removeClassSnake : (y : number, x : number) => void,
     addClassPoint : (y : number, x : number) => void,
     removeClassPoint : (y : number, x : number) => void,
-    addClassColor : (y : number, x : number, color : string) => void,
+    removeClassName : (y : number , x : number) => void,
+    setTableColor : (color : string) => void,
     removeClassColor : (y : number, x : number, color : string) => void,
     setDpPoint : (point : number) => void,
 }
@@ -24,8 +25,11 @@ function OutputView (this : OutputViewType) {
     this.removeClassPoint = (y, x) => {
         Documents.position[y].children[x].classList.remove(ClassList.POINT);
     };
-    this.addClassColor = (y, x, color) => {
-        Documents.position[y].children[x].classList.add(color);
+    this.removeClassName = (y, x) => {
+        Documents.position[y].children[x].className = "";
+    };
+    this.setTableColor = (color) => {
+        Documents.table.className = color
     };
     this.removeClassColor = (y, x, color) => {
         Documents.position[y].children[x].classList.remove(color);

@@ -78,6 +78,11 @@ var ConditionValue;
   ConditionValue[ConditionValue["hard"] = 40] = "hard";
   ConditionValue[ConditionValue["startX"] = 10] = "startX";
   ConditionValue[ConditionValue["startY"] = 15] = "startY";
+  ConditionValue[ConditionValue["MIN_OPTIC"] = 1] = "MIN_OPTIC";
+  ConditionValue[ConditionValue["MIN_BLUE"] = 2] = "MIN_BLUE";
+  ConditionValue[ConditionValue["MIN_PURPLE"] = 3] = "MIN_PURPLE";
+  ConditionValue[ConditionValue["MIN_YELLOW"] = 4] = "MIN_YELLOW";
+  ConditionValue[ConditionValue["MIN_RED"] = 5] = "MIN_RED";
 })(ConditionValue || (exports.ConditionValue = ConditionValue = {}));
 
 /***/ }),
@@ -212,7 +217,7 @@ exports.BoardService = BoardService;
 /*!**********************************************************!*\
   !*** ./compile/application/Model/Service/GameService.js ***!
   \**********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 
@@ -220,12 +225,30 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.GameService = void 0;
+var ConditionValue_1 = __webpack_require__(/*! ../Domain/Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var ClassList_js_1 = __webpack_require__(/*! ../Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
 function GameService() {
   this.setGameState = function (Game, state) {
     Game.canPlay = state;
   };
   this.setGameProceeding = function (Game, state) {
     Game.isProceeding = state;
+  };
+  this.setColor = function (length) {
+    var quotient = Math.floor(length / 15);
+    if (ConditionValue_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_BLUE) {
+      return ClassList_js_1.ClassList.OPTIC;
+    } else if (ConditionValue_1.ConditionValue.MIN_BLUE <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_PURPLE) {
+      return ClassList_js_1.ClassList.BLUE;
+    } else if (ConditionValue_1.ConditionValue.MIN_PURPLE <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_YELLOW) {
+      return ClassList_js_1.ClassList.PURPLE;
+    } else if (ConditionValue_1.ConditionValue.MIN_YELLOW <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_RED) {
+      return ClassList_js_1.ClassList.YELLOW;
+    } else if (ConditionValue_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_BLUE) {
+      return ClassList_js_1.ClassList.RED;
+    } else {
+      return "";
+    }
   };
 }
 exports.GameService = GameService;
@@ -403,8 +426,11 @@ function OutputView() {
   this.removeClassPoint = function (y, x) {
     Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.POINT);
   };
-  this.addClassColor = function (y, x, color) {
-    Documents_1.Documents.position[y].children[x].classList.add(color);
+  this.removeClassName = function (y, x) {
+    Documents_1.Documents.position[y].children[x].className = "";
+  };
+  this.setTableColor = function (color) {
+    Documents_1.Documents.table.className = color;
   };
   this.removeClassColor = function (y, x, color) {
     Documents_1.Documents.position[y].children[x].classList.remove(color);
@@ -473,9 +499,12 @@ function GameController() {
   this.Game = new Game_js_1.Game();
   this.GameService = new GameService_js_1.GameService(), this.outputView = new OutputView_js_1.OutputView();
   this.inputView = new InputView_js_1.InputView();
+  this.setClassOnSnake = function () {
+    _this.outputView.setTableColor(_this.GameService.setColor(_this.Snake.bodys.length));
+  };
   this.removeAllSnakeClass = function () {
     for (var i = 0; i < _this.Snake.bodys.length; i++) {
-      _this.outputView.removeClassSnake(_this.Snake.bodys[i][0], _this.Snake.bodys[i][1]);
+      _this.outputView.removeClassName(_this.Snake.bodys[i][0], _this.Snake.bodys[i][1]);
     }
   };
   this.makeNewPoint = function () {
@@ -485,7 +514,7 @@ function GameController() {
   this.moveFoward = function () {
     _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
     _this.outputView.addClassSnake(_this.Snake.onY, _this.Snake.onX);
-    _this.outputView.removeClassSnake(_this.Snake.getLastY(), _this.Snake.getLastX());
+    _this.outputView.removeClassName(_this.Snake.getLastY(), _this.Snake.getLastX());
     _this.SnakeService.removeSnake(_this.Snake);
   };
   this.gameStart = function () {
@@ -503,7 +532,7 @@ function GameController() {
     clearInterval(_this.Snake.nowProgressed);
     _this.GameService.setGameState(_this.Game, false);
     _this.removeAllSnakeClass();
-    _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+    _this.outputView.removeClassName(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
     _this.gameInit();
   };
   this.checkOver = function () {
@@ -518,6 +547,7 @@ function GameController() {
       _this.outputView.setDpPoint(_this.Snake.bodys.length);
       _this.SnakeService.addSnake(_this.Snake, _this.Snake.onY, _this.Snake.onX);
       _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+      _this.setClassOnSnake();
       _this.makeNewPoint();
       _this.moveFoward();
       return;

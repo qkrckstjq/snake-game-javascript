@@ -21,6 +21,7 @@ interface GameControllerType {
     outputView : OutputViewType,
     inputView : InputViewType,
 
+    setClassOnSnake : () => void,
     removeAllSnakeClass : () => void,
     makeNewPoint : () => void,
     moveFoward : () => void,
@@ -42,9 +43,12 @@ function GameController(this : GameControllerType) {
     this.outputView = new OutputView();
     this.inputView = new InputView();
 
+    this.setClassOnSnake = () => {
+        this.outputView.setTableColor(this.GameService.setColor(this.Snake.bodys.length));
+    }
     this.removeAllSnakeClass = () => {
         for(let i = 0; i < this.Snake.bodys.length; i++) {
-            this.outputView.removeClassSnake(this.Snake.bodys[i][0], this.Snake.bodys[i][1]);
+            this.outputView.removeClassName(this.Snake.bodys[i][0], this.Snake.bodys[i][1]);
         }
     };
     this.makeNewPoint = () => {
@@ -54,7 +58,7 @@ function GameController(this : GameControllerType) {
     this.moveFoward = () => {
         this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
         this.outputView.addClassSnake(this.Snake.onY, this.Snake.onX);
-        this.outputView.removeClassSnake(this.Snake.getLastY(), this.Snake.getLastX());
+        this.outputView.removeClassName(this.Snake.getLastY(), this.Snake.getLastX());
         this.SnakeService.removeSnake(this.Snake);   
     };
     this.gameStart = () => {
@@ -72,7 +76,7 @@ function GameController(this : GameControllerType) {
         clearInterval(this.Snake.nowProgressed);
         this.GameService.setGameState(this.Game,false);
         this.removeAllSnakeClass();
-        this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.outputView.removeClassName(this.Snake.pointYX[0], this.Snake.pointYX[1]);
         this.gameInit();
     };
     this.checkOver = () => {
@@ -87,6 +91,7 @@ function GameController(this : GameControllerType) {
             this.outputView.setDpPoint(this.Snake.bodys.length);
             this.SnakeService.addSnake(this.Snake, this.Snake.onY, this.Snake.onX);
             this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+            this.setClassOnSnake();
             this.makeNewPoint();
             this.moveFoward();
             return;
@@ -100,7 +105,7 @@ function GameController(this : GameControllerType) {
     this.moveAsync = (keyCode) => {
         clearInterval(this.Snake.nowProgressed);
         this.SnakeService.moveAsync(keyCode, this.Snake, this.Game,[
-            this.whenOnPoint,
+            this.whenOnPoint
         ]);
     }
 }
