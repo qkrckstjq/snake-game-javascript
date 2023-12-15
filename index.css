@@ -31,6 +31,7 @@
     flex-direction: row;
     width: 100%;
     height: 90%;
+
 }
 
 .game__info__wrapper{
@@ -82,6 +83,7 @@ span {
 }
 
 table {
+    max-width: 80%;
     flex:2.5;
     margin-left:auto;
     margin-right:auto;
@@ -89,6 +91,10 @@ table {
     height: 90%;
     border-spacing:0px;
     border-radius: 10px;
+}
+
+td {
+    height: 25px;
 }
 
 .right__content {
@@ -215,4 +221,33 @@ ul li:nth-child(2) {
 ul li:nth-child(3) {
     font-size:20px;
     color:green
+}
+
+
+@media screen and (max-width:1500px) {
+    .game__info__wrapper {
+        display: none;
+    }
+    .right__content {
+        display: none;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    table {
+        height: 60%;
+    }
+    td {
+        height : 20px;
+    }
+}
+
+@media screen and (max-width:800px) {
+    table {
+        max-width: 90%;
+        height: 50%;
+    }
+    td {
+        height : 10px;
+    }
 }

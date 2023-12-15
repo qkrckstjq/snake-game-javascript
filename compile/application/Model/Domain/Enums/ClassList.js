@@ -16,5 +16,6 @@ var ClassList;
     ClassList["DP_POINT"] = "dp__point";
     ClassList["NOMAL"] = ".nomal";
     ClassList["HARD"] = ".hard";
+    ClassList["MODE"] = "now__mode";
 })(ClassList || (exports.ClassList = ClassList = {}));
 ;

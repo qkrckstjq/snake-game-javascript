@@ -36,7 +36,7 @@ function OutputView (this : OutputViewType) {
     };
     this.setDpPoint = (point) => {
         Documents.dpElement[0].textContent = `점수 : ${point}`;
-    }
+    };
 }
 
 export {OutputView, OutputViewType};

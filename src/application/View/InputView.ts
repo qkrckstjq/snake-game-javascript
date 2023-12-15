@@ -10,11 +10,16 @@ interface InputViewType {
 function InputView (this : InputViewType) {
     this.setDifficulty = (Game) => {
         const normalCallback = () => {
-            Game.speed = ConditionValue.normal;
+            if(!Game.isProceeding) {
+                
+                Game.speed = ConditionValue.normal;
+            }
         };
 
         const hardCallback = () => {
-            Game.speed = ConditionValue.hard;
+            if(!Game.isProceeding) {
+                Game.speed = ConditionValue.hard;
+            }
         };
 
         Documents.normalButton.addEventListener('click', normalCallback);

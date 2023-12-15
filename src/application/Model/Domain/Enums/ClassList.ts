@@ -12,6 +12,7 @@ enum ClassList {
     DP_POINT = "dp__point",
     NOMAL = ".nomal",
     HARD = ".hard",
+    MODE = "now__mode",
 };
 
 export {ClassList};
