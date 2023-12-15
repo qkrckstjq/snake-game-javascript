@@ -594,22 +594,21 @@ function GameController() {
     _this.outputView.addFocusOnButton(Documents_js_1.Documents.hardButton);
     _this.outputView.removeFocusOnButton(Documents_js_1.Documents.normalButton);
   };
+  this.run = function (event) {
+    if (_this.Game.canPlay && KeyCodeList_js_1.KeyCode[event.code] && _this.SnakeService.checkCanChangeDirection(_this.Snake, event.code)) {
+      clearInterval(_this.Snake.nowProgressed);
+      _this.move(event.code);
+      _this.moveAsync(event.code);
+    }
+  };
 }
 var controller = new GameController();
 controller.inputView.setDifficultyNormal(controller.Game);
 controller.gameStart();
-window.addEventListener("DOMContentLoaded", function () {
-  controller.checkMode();
-});
+window.addEventListener("DOMContentLoaded", controller.checkMode);
 Documents_js_1.Documents.normalButton.addEventListener("click", controller.whenClickNoraml);
 Documents_js_1.Documents.hardButton.addEventListener("click", controller.whenClickHard);
-document.addEventListener("keydown", function (e) {
-  if (controller.Game.canPlay && KeyCodeList_js_1.KeyCode[e.code] && controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)) {
-    clearInterval(controller.Snake.nowProgressed);
-    controller.move(e.code);
-    controller.moveAsync(e.code);
-  }
-});
+document.addEventListener("keydown", controller.run);
 })();
 
 /******/ })()

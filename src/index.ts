@@ -35,6 +35,7 @@ interface GameControllerType {
     checkMode : () => void,
     whenClickNoraml : () => void,
     whenClickHard : () => void,
+    run : (event : KeyboardEvent) => void
 }
 
 function GameController(this : GameControllerType) {
@@ -135,7 +136,16 @@ function GameController(this : GameControllerType) {
         this.outputView.addFocusOnButton(Documents.hardButton);
         this.outputView.removeFocusOnButton(Documents.normalButton);
     }
-
+    this.run = (event) => {
+        if (this.Game.canPlay && 
+            KeyCode[event.code] &&
+            this.SnakeService.checkCanChangeDirection(this.Snake, event.code)
+        ) {
+            clearInterval(this.Snake.nowProgressed);
+            this.move(event.code);
+            this.moveAsync(event.code);
+        }
+    }
 }
 
 const controller = new GameController();
@@ -143,21 +153,10 @@ const controller = new GameController();
 controller.inputView.setDifficultyNormal(controller.Game);
 controller.gameStart();
 
-window.addEventListener("DOMContentLoaded", ()=> {
-    controller.checkMode()
-})
+window.addEventListener("DOMContentLoaded", controller.checkMode)
 
 Documents.normalButton.addEventListener("click", controller.whenClickNoraml)
 
 Documents.hardButton.addEventListener("click", controller.whenClickHard)
 
-document.addEventListener("keydown", (e) => {
-    if (controller.Game.canPlay && 
-        KeyCode[e.code] &&
-        controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)
-    ) {
-        clearInterval(controller.Snake.nowProgressed);
-        controller.move(e.code);
-        controller.moveAsync(e.code);
-    }
-});
+document.addEventListener("keydown", controller.run);
