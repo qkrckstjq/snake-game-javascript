@@ -10,9 +10,10 @@ enum ClassList {
     PURPLE = "purple",
     RED = "red",
     DP_POINT = "dp__point",
-    NOMAL = ".nomal",
+    NORMAL = ".normal",
     HARD = ".hard",
     MODE = "now__mode",
+    GRAY = "gray",
 };
 
 export {ClassList};

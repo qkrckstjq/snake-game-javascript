@@ -28,5 +28,11 @@ function OutputView() {
     this.setDpPoint = function (point) {
         Documents_1.Documents.dpElement[0].textContent = "\uC810\uC218 : ".concat(point);
     };
+    this.addFocusOnButton = function (element) {
+        element.classList.add(ClassList_1.ClassList.GRAY);
+    };
+    this.removeFocusOnButton = function (element) {
+        element.classList.remove(ClassList_1.ClassList.GRAY);
+    };
 }
 exports.OutputView = OutputView;

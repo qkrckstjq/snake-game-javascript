@@ -106,6 +106,10 @@ td {
     margin-left:10px;
 }
 
+.game__mode__box .gray {
+    background-color: gray;
+}
+
 table td.snake {
     background-color: black;
 }
@@ -189,10 +193,6 @@ table.red td.snake {
 
 .btn__wrapper button:hover {
     cursor: pointer;
-}
-
-.game__mode__box button:focus {
-    background-color: lightblue;
 }
 
 .ranking__box {

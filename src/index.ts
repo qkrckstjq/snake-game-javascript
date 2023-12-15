@@ -32,6 +32,9 @@ interface GameControllerType {
     whenOnPoint : () => void,
     move : (keyCode : string) => void, 
     moveAsync : (keyCode : string) => void,
+    checkMode : () => void,
+    whenClickNoraml : () => void,
+    whenClickHard : () => void,
 }
 
 function GameController(this : GameControllerType) {
@@ -110,13 +113,43 @@ function GameController(this : GameControllerType) {
         this.SnakeService.moveAsync(keyCode, this.Snake, this.Game,[
             this.whenOnPoint
         ]);
+    };
+    this.checkMode = () => {
+        console.log(this.Game.speed, ConditionValue.normal);
+        console.log(Documents.normalButton);
+        if(this.Game.speed == ConditionValue.normal) {
+            this.outputView.addFocusOnButton(Documents.normalButton);
+            this.outputView.removeFocusOnButton(Documents.hardButton);
+        } else {
+            this.outputView.addFocusOnButton(Documents.hardButton);
+            this.outputView.removeFocusOnButton(Documents.normalButton);
+        }
     }
+    this.whenClickNoraml = () => {
+        this.inputView.setDifficultyNormal(this.Game);
+        this.outputView.addFocusOnButton(Documents.normalButton);
+        this.outputView.removeFocusOnButton(Documents.hardButton);
+    };
+    this.whenClickHard = () => {
+        this.inputView.setDifficultyHard(this.Game);
+        this.outputView.addFocusOnButton(Documents.hardButton);
+        this.outputView.removeFocusOnButton(Documents.normalButton);
+    }
+
 }
 
 const controller = new GameController();
 
-controller.inputView.setDifficulty(controller.Game);
+controller.inputView.setDifficultyNormal(controller.Game);
 controller.gameStart();
+
+window.addEventListener("DOMContentLoaded", ()=> {
+    controller.checkMode()
+})
+
+Documents.normalButton.addEventListener("click", controller.whenClickNoraml)
+
+Documents.hardButton.addEventListener("click", controller.whenClickHard)
 
 document.addEventListener("keydown", (e) => {
     if (controller.Game.canPlay && 

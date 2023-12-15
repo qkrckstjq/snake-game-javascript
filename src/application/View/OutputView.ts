@@ -10,6 +10,8 @@ interface OutputViewType {
     setTableColor : (color : string) => void,
     removeClassColor : (y : number, x : number, color : string) => void,
     setDpPoint : (point : number) => void,
+    addFocusOnButton : (element : HTMLElement) => void,
+    removeFocusOnButton : (element : HTMLElement) => void,
 }
 
 function OutputView (this : OutputViewType) {
@@ -36,6 +38,12 @@ function OutputView (this : OutputViewType) {
     };
     this.setDpPoint = (point) => {
         Documents.dpElement[0].textContent = `점수 : ${point}`;
+    };
+    this.addFocusOnButton = (element) => {
+        element.classList.add(ClassList.GRAY);
+    };
+    this.removeFocusOnButton = (element) => {        
+        element.classList.remove(ClassList.GRAY);
     };
 }
 

@@ -19,7 +19,7 @@ var Documents = {
   table: document.querySelector(ClassList_js_1.ClassList.TABLE),
   position: document.getElementsByTagName(ClassList_js_1.ClassList.TR),
   dpElement: document.getElementsByClassName(ClassList_js_1.ClassList.DP_POINT),
-  normalButton: document.querySelector(ClassList_js_1.ClassList.NOMAL),
+  normalButton: document.querySelector(ClassList_js_1.ClassList.NORMAL),
   hardButton: document.querySelector(ClassList_js_1.ClassList.HARD)
 };
 exports.Documents = Documents;
@@ -51,9 +51,10 @@ var ClassList;
   ClassList["PURPLE"] = "purple";
   ClassList["RED"] = "red";
   ClassList["DP_POINT"] = "dp__point";
-  ClassList["NOMAL"] = ".nomal";
+  ClassList["NORMAL"] = ".normal";
   ClassList["HARD"] = ".hard";
   ClassList["MODE"] = "now__mode";
+  ClassList["GRAY"] = "gray";
 })(ClassList || (exports.ClassList = ClassList = {}));
 ;
 
@@ -382,22 +383,17 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.InputView = void 0;
-var Documents_1 = __webpack_require__(/*! ../Model/Domain/Documents */ "./compile/application/Model/Domain/Documents.js");
 var ConditionValue_1 = __webpack_require__(/*! ../Model/Domain/Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
 function InputView() {
-  this.setDifficulty = function (Game) {
-    var normalCallback = function normalCallback() {
-      if (!Game.isProceeding) {
-        Game.speed = ConditionValue_1.ConditionValue.normal;
-      }
-    };
-    var hardCallback = function hardCallback() {
-      if (!Game.isProceeding) {
-        Game.speed = ConditionValue_1.ConditionValue.hard;
-      }
-    };
-    Documents_1.Documents.normalButton.addEventListener('click', normalCallback);
-    Documents_1.Documents.hardButton.addEventListener('click', hardCallback);
+  this.setDifficultyNormal = function (Game) {
+    if (!Game.isProceeding) {
+      Game.speed = ConditionValue_1.ConditionValue.normal;
+    }
+  };
+  this.setDifficultyHard = function (Game) {
+    if (!Game.isProceeding) {
+      Game.speed = ConditionValue_1.ConditionValue.hard;
+    }
   };
 }
 exports.InputView = InputView;
@@ -442,6 +438,12 @@ function OutputView() {
   };
   this.setDpPoint = function (point) {
     Documents_1.Documents.dpElement[0].textContent = "\uC810\uC218 : ".concat(point);
+  };
+  this.addFocusOnButton = function (element) {
+    element.classList.add(ClassList_1.ClassList.GRAY);
+  };
+  this.removeFocusOnButton = function (element) {
+    element.classList.remove(ClassList_1.ClassList.GRAY);
   };
 }
 exports.OutputView = OutputView;
@@ -494,6 +496,7 @@ var SnakeService_js_1 = __webpack_require__(/*! ./application/Model/Service/Snak
 var Game_js_1 = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
 var GameService_js_1 = __webpack_require__(/*! ./application/Model/Service/GameService.js */ "./compile/application/Model/Service/GameService.js");
 var KeyCodeList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
 var OutputView_js_1 = __webpack_require__(/*! ./application/View/OutputView.js */ "./compile/application/View/OutputView.js");
 var InputView_js_1 = __webpack_require__(/*! ./application/View/InputView.js */ "./compile/application/View/InputView.js");
 function GameController() {
@@ -570,10 +573,36 @@ function GameController() {
     _this.Game.isProceeding = true;
     _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.whenOnPoint]);
   };
+  this.checkMode = function () {
+    console.log(_this.Game.speed, ConditionValue_js_1.ConditionValue.normal);
+    console.log(Documents_js_1.Documents.normalButton);
+    if (_this.Game.speed == ConditionValue_js_1.ConditionValue.normal) {
+      _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
+      _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);
+    } else {
+      _this.outputView.addFocusOnButton(Documents_js_1.Documents.hardButton);
+      _this.outputView.removeFocusOnButton(Documents_js_1.Documents.normalButton);
+    }
+  };
+  this.whenClickNoraml = function () {
+    _this.inputView.setDifficultyNormal(_this.Game);
+    _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
+    _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);
+  };
+  this.whenClickHard = function () {
+    _this.inputView.setDifficultyHard(_this.Game);
+    _this.outputView.addFocusOnButton(Documents_js_1.Documents.hardButton);
+    _this.outputView.removeFocusOnButton(Documents_js_1.Documents.normalButton);
+  };
 }
 var controller = new GameController();
-controller.inputView.setDifficulty(controller.Game);
+controller.inputView.setDifficultyNormal(controller.Game);
 controller.gameStart();
+window.addEventListener("DOMContentLoaded", function () {
+  controller.checkMode();
+});
+Documents_js_1.Documents.normalButton.addEventListener("click", controller.whenClickNoraml);
+Documents_js_1.Documents.hardButton.addEventListener("click", controller.whenClickHard);
 document.addEventListener("keydown", function (e) {
   if (controller.Game.canPlay && KeyCodeList_js_1.KeyCode[e.code] && controller.SnakeService.checkCanChangeDirection(controller.Snake, e.code)) {
     clearInterval(controller.Snake.nowProgressed);

@@ -6,7 +6,7 @@ var Documents = {
     table: document.querySelector(ClassList_js_1.ClassList.TABLE),
     position: document.getElementsByTagName(ClassList_js_1.ClassList.TR),
     dpElement: document.getElementsByClassName(ClassList_js_1.ClassList.DP_POINT),
-    normalButton: document.querySelector(ClassList_js_1.ClassList.NOMAL),
+    normalButton: document.querySelector(ClassList_js_1.ClassList.NORMAL),
     hardButton: document.querySelector(ClassList_js_1.ClassList.HARD),
 };
 exports.Documents = Documents;

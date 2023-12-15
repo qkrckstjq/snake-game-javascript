@@ -4,26 +4,20 @@ import { Documents } from "../Model/Domain/Documents"
 import { ConditionValue } from "../Model/Domain/Enums/ConditionValue"
 
 interface InputViewType {
-    setDifficulty : (Game : GameType) => void
+    setDifficultyNormal : (Game : GameType) => void
+    setDifficultyHard : (Game : GameType) => void
 }
 
 function InputView (this : InputViewType) {
-    this.setDifficulty = (Game) => {
-        const normalCallback = () => {
-            if(!Game.isProceeding) {
-                
-                Game.speed = ConditionValue.normal;
-            }
-        };
-
-        const hardCallback = () => {
-            if(!Game.isProceeding) {
-                Game.speed = ConditionValue.hard;
-            }
-        };
-
-        Documents.normalButton.addEventListener('click', normalCallback);
-        Documents.hardButton.addEventListener('click', hardCallback);
+    this.setDifficultyNormal = (Game) => {
+        if(!Game.isProceeding) {
+            Game.speed = ConditionValue.normal;
+        }
+    }
+    this.setDifficultyHard = (Game) => {
+        if(!Game.isProceeding) {
+            Game.speed = ConditionValue.hard;
+        }
     }
 }
 

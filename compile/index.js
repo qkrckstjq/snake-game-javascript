@@ -7,6 +7,7 @@ var SnakeService_js_1 = require("./application/Model/Service/SnakeService.js");
 var Game_js_1 = require("./application/Model/Domain/Game.js");
 var GameService_js_1 = require("./application/Model/Service/GameService.js");
 var KeyCodeList_js_1 = require("./application/Model/Domain/Enums/KeyCodeList.js");
+var ConditionValue_js_1 = require("./application/Model/Domain/Enums/ConditionValue.js");
 var OutputView_js_1 = require("./application/View/OutputView.js");
 var InputView_js_1 = require("./application/View/InputView.js");
 function GameController() {
@@ -86,10 +87,37 @@ function GameController() {
             _this.whenOnPoint
         ]);
     };
+    this.checkMode = function () {
+        console.log(_this.Game.speed, ConditionValue_js_1.ConditionValue.normal);
+        console.log(Documents_js_1.Documents.normalButton);
+        if (_this.Game.speed == ConditionValue_js_1.ConditionValue.normal) {
+            _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
+            _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);
+        }
+        else {
+            _this.outputView.addFocusOnButton(Documents_js_1.Documents.hardButton);
+            _this.outputView.removeFocusOnButton(Documents_js_1.Documents.normalButton);
+        }
+    };
+    this.whenClickNoraml = function () {
+        _this.inputView.setDifficultyNormal(_this.Game);
+        _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
+        _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);
+    };
+    this.whenClickHard = function () {
+        _this.inputView.setDifficultyHard(_this.Game);
+        _this.outputView.addFocusOnButton(Documents_js_1.Documents.hardButton);
+        _this.outputView.removeFocusOnButton(Documents_js_1.Documents.normalButton);
+    };
 }
 var controller = new GameController();
-controller.inputView.setDifficulty(controller.Game);
+controller.inputView.setDifficultyNormal(controller.Game);
 controller.gameStart();
+window.addEventListener("DOMContentLoaded", function () {
+    controller.checkMode();
+});
+Documents_js_1.Documents.normalButton.addEventListener("click", controller.whenClickNoraml);
+Documents_js_1.Documents.hardButton.addEventListener("click", controller.whenClickHard);
 document.addEventListener("keydown", function (e) {
     if (controller.Game.canPlay &&
         KeyCodeList_js_1.KeyCode[e.code] &&
