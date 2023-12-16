@@ -20,6 +20,11 @@ function GameController(this : GameControllerType) {
     this.outputView = new OutputView();
     this.inputView = new InputView();
 
+    this.whenDomLoaded = () => {
+        this.inputView.setDifficultyNormal(this.Game);
+        this.gameStart();
+        this.checkMode()
+    }
     this.setClassOnSnake = () => {
         this.outputView.setTableColor(this.GameService.setColor(this.Snake.bodys.length));
     }
@@ -122,10 +127,7 @@ function GameController(this : GameControllerType) {
 
 const controller = new GameController();
 
-controller.inputView.setDifficultyNormal(controller.Game);
-controller.gameStart();
-
-window.addEventListener("DOMContentLoaded", controller.checkMode)
+window.addEventListener("DOMContentLoaded", controller.whenDomLoaded)
 
 Documents.normalButton.addEventListener("click", controller.whenClickNoraml)
 

@@ -16,7 +16,8 @@ interface GameControllerType {
     GameService : GameServiceType,
     outputView : OutputViewType,
     inputView : InputViewType,
-
+    
+    whenDomLoaded : () => void,
     setClassOnSnake : () => void,
     removeAllSnakeClass : () => void,
     makeNewPoint : () => void,

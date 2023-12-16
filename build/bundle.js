@@ -505,6 +505,11 @@ function GameController() {
   this.Game = new Game_js_1.Game();
   this.GameService = new GameService_js_1.GameService(), this.outputView = new OutputView_js_1.OutputView();
   this.inputView = new InputView_js_1.InputView();
+  this.whenDomLoaded = function () {
+    _this.inputView.setDifficultyNormal(_this.Game);
+    _this.gameStart();
+    _this.checkMode();
+  };
   this.setClassOnSnake = function () {
     _this.outputView.setTableColor(_this.GameService.setColor(_this.Snake.bodys.length));
   };
@@ -600,9 +605,7 @@ function GameController() {
   };
 }
 var controller = new GameController();
-controller.inputView.setDifficultyNormal(controller.Game);
-controller.gameStart();
-window.addEventListener("DOMContentLoaded", controller.checkMode);
+window.addEventListener("DOMContentLoaded", controller.whenDomLoaded);
 Documents_js_1.Documents.normalButton.addEventListener("click", controller.whenClickNoraml);
 Documents_js_1.Documents.hardButton.addEventListener("click", controller.whenClickHard);
 document.addEventListener("keydown", controller.run);
