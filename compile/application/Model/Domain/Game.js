@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
-var ConditionValue_1 = require("./Enums/ConditionValue");
+var ConditionValue_1 = require("./Enum/ConditionValue");
 function Game() {
     this.point = 0;
     this.isModal = false;

@@ -1,23 +1,5 @@
-import { ConditionValue } from "./Enums/ConditionValue.js";
-import { SnakeService } from '../Service/SnakeService.js';
-import { BoardService } from "../Service/BoardService.js";
-
-interface SnakeType {
-    startX : number,
-    startY : number,
-    stateRight : boolean,
-    stateLeft : boolean,
-    stateUp : boolean,
-    stateDown : boolean,
-    bodys : number[][],
-    pointYX : number[],
-    nowProgressed : number | undefined,//비동기함수ID
-    onX : number,
-    onY : number,
-    // canChangeDirection : boolean,
-    getLastY : ()=>number,
-    getLastX : ()=>number,
-}
+import { ConditionValue } from "./Enum/ConditionValue.js";
+import { SnakeType } from "./Interface/DomainType/Snake.interface.js";
 
 function Snake (this:SnakeType) {
     this.startX = ConditionValue.startX;
@@ -31,7 +13,6 @@ function Snake (this:SnakeType) {
     this.nowProgressed = undefined;
     this.onX = ConditionValue.startX;
     this.onY = ConditionValue.startY;
-    // this.canChangeDirection = true;
     this.getLastY = () => {
         return this.bodys[this.bodys.length-1][0];
     };

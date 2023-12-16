@@ -6,8 +6,8 @@ var Snake_js_1 = require("./application/Model/Domain/Snake.js");
 var SnakeService_js_1 = require("./application/Model/Service/SnakeService.js");
 var Game_js_1 = require("./application/Model/Domain/Game.js");
 var GameService_js_1 = require("./application/Model/Service/GameService.js");
-var KeyCodeList_js_1 = require("./application/Model/Domain/Enums/KeyCodeList.js");
-var ConditionValue_js_1 = require("./application/Model/Domain/Enums/ConditionValue.js");
+var KeyCodeList_js_1 = require("./application/Model/Domain/Enum/KeyCodeList.js");
+var ConditionValue_js_1 = require("./application/Model/Domain/Enum/ConditionValue.js");
 var OutputView_js_1 = require("./application/View/OutputView.js");
 var InputView_js_1 = require("./application/View/InputView.js");
 function GameController() {

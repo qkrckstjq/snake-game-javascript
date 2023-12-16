@@ -1,14 +1,6 @@
-import {Snake, SnakeType} from '../Domain/Snake.js';
-import { Game, GameType } from '../Domain/Game.js';
-import { SnakeService, SnakeServiceType } from './SnakeService';
-import { ConditionValue } from '../Domain/Enums/ConditionValue';
-import { ClassList } from '../Domain/Enums/ClassList.js';
-
-interface GameServiceType {
-    setGameState : (Game : GameType, state : boolean) => void,
-    setGameProceeding : (Game : GameType, state : boolean) => void
-    setColor : (length : number) => string
-}
+import { ConditionValue } from '../Domain/Enum/ConditionValue.js';
+import { ClassList } from '../Domain/Enum/ClassList.js';
+import { GameServiceType } from '../Domain/Interface/ServiceType/GameService.interface.js';
 
 function GameService(this:GameServiceType) {
     this.setGameState = (Game, state) => {

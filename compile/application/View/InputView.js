@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InputView = void 0;
-var ConditionValue_1 = require("../Model/Domain/Enums/ConditionValue");
+var ConditionValue_1 = require("../Model/Domain/Enum/ConditionValue");
 function InputView() {
     this.setDifficultyNormal = function (Game) {
         if (!Game.isProceeding) {

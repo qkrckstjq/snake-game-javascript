@@ -1,18 +1,6 @@
 import { Documents } from "../Model/Domain/Documents"
-import { ClassList } from "../Model/Domain/Enums/ClassList"
-
-interface OutputViewType {
-    addClassSnake : (y : number, x : number) => void,
-    removeClassSnake : (y : number, x : number) => void,
-    addClassPoint : (y : number, x : number) => void,
-    removeClassPoint : (y : number, x : number) => void,
-    removeClassName : (y : number , x : number) => void,
-    setTableColor : (color : string) => void,
-    removeClassColor : (y : number, x : number, color : string) => void,
-    setDpPoint : (point : number) => void,
-    addFocusOnButton : (element : HTMLElement) => void,
-    removeFocusOnButton : (element : HTMLElement) => void,
-}
+import { ClassList } from "../Model/Domain/Enum/ClassList"
+import { OutputViewType } from "../Model/Domain/Interface/ViewType/OutputView.interface";
 
 function OutputView (this : OutputViewType) {
     this.addClassSnake = (y, x) => {

@@ -1,15 +1,5 @@
-import { BoardService } from "../Service/BoardService";
-import { SnakeService } from "../Service/SnakeService";
-import { ConditionValue } from "./Enums/ConditionValue"
-import { Documents } from "./Documents";
-
-interface GameType {
-    point : number,
-    isModal : boolean,
-    speed : number,
-    isProceeding : boolean,
-    canPlay : boolean,
-}
+import { ConditionValue } from "./Enum/ConditionValue";
+import { GameType } from "./Interface/DomainType/Game.interface";
 
 function Game(this : GameType) {
     this.point = 0;

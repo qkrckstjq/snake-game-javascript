@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Snake = void 0;
-var ConditionValue_js_1 = require("./Enums/ConditionValue.js");
+var ConditionValue_js_1 = require("./Enum/ConditionValue.js");
 function Snake() {
     var _this = this;
     this.startX = ConditionValue_js_1.ConditionValue.startX;
@@ -15,7 +15,6 @@ function Snake() {
     this.nowProgressed = undefined;
     this.onX = ConditionValue_js_1.ConditionValue.startX;
     this.onY = ConditionValue_js_1.ConditionValue.startY;
-    // this.canChangeDirection = true;
     this.getLastY = function () {
         return _this.bodys[_this.bodys.length - 1][0];
     };

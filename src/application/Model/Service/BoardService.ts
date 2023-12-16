@@ -1,11 +1,5 @@
-import { Documents } from "../Domain/Documents.js";
-import { ConditionValue } from "../Domain/Enums/ConditionValue.js";
-import { Snake, SnakeType}  from '../Domain/Snake.js';
-
-interface BoardServiceType {
-    initTable : (element : HTMLElement) => void,
-    makePoint : (Snake : SnakeType) => number[],
-}
+import { ConditionValue } from "../Domain/Enum/ConditionValue.js";
+import { BoardServiceType } from "../Domain/Interface/ServiceType/BoardService.interface.js";
 
 function BoardService(this : BoardServiceType)  {
     this.initTable = (element) => {

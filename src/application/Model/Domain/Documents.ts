@@ -1,12 +1,5 @@
-import {ClassList} from "./Enums/ClassList.js";
-
-interface DocumentsType {
-    table : HTMLElement,
-    position : HTMLCollectionOf<HTMLTableRowElement>,
-    dpElement : HTMLCollectionOf<Element>,
-    normalButton : HTMLElement,
-    hardButton : HTMLElement,
-}
+import {ClassList} from "./Enum/ClassList.js";
+import { DocumentsType } from "./Interface/DomainType/DocumentType.interface.js";
 
 const Documents:DocumentsType = {
     table : document.querySelector(ClassList.TABLE),

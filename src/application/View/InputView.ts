@@ -1,12 +1,6 @@
-import { Snake, SnakeType } from "../Model/Domain/Snake"
-import { Game, GameType } from "../Model/Domain/Game"
-import { Documents } from "../Model/Domain/Documents"
-import { ConditionValue } from "../Model/Domain/Enums/ConditionValue"
+import { ConditionValue } from "../Model/Domain/Enum/ConditionValue"
+import { InputViewType } from "../Model/Domain/Interface/ViewType/InputViewType.interface"
 
-interface InputViewType {
-    setDifficultyNormal : (Game : GameType) => void
-    setDifficultyHard : (Game : GameType) => void
-}
 
 function InputView (this : InputViewType) {
     this.setDifficultyNormal = (Game) => {

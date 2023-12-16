@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BoardService = void 0;
-var ConditionValue_js_1 = require("../Domain/Enums/ConditionValue.js");
+var ConditionValue_js_1 = require("../Domain/Enum/ConditionValue.js");
 function BoardService() {
     this.initTable = function (element) {
         for (var i = 0; i < ConditionValue_js_1.ConditionValue.col; i++) {

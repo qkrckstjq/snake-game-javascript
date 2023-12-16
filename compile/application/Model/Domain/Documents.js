@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Documents = void 0;
-var ClassList_js_1 = require("./Enums/ClassList.js");
+var ClassList_js_1 = require("./Enum/ClassList.js");
 var Documents = {
     table: document.querySelector(ClassList_js_1.ClassList.TABLE),
     position: document.getElementsByTagName(ClassList_js_1.ClassList.TR),

@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.Documents = void 0;
-var ClassList_js_1 = __webpack_require__(/*! ./Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+var ClassList_js_1 = __webpack_require__(/*! ./Enum/ClassList.js */ "./compile/application/Model/Domain/Enum/ClassList.js");
 var Documents = {
   table: document.querySelector(ClassList_js_1.ClassList.TABLE),
   position: document.getElementsByTagName(ClassList_js_1.ClassList.TR),
@@ -26,10 +26,10 @@ exports.Documents = Documents;
 
 /***/ }),
 
-/***/ "./compile/application/Model/Domain/Enums/ClassList.js":
-/*!*************************************************************!*\
-  !*** ./compile/application/Model/Domain/Enums/ClassList.js ***!
-  \*************************************************************/
+/***/ "./compile/application/Model/Domain/Enum/ClassList.js":
+/*!************************************************************!*\
+  !*** ./compile/application/Model/Domain/Enum/ClassList.js ***!
+  \************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -60,10 +60,10 @@ var ClassList;
 
 /***/ }),
 
-/***/ "./compile/application/Model/Domain/Enums/ConditionValue.js":
-/*!******************************************************************!*\
-  !*** ./compile/application/Model/Domain/Enums/ConditionValue.js ***!
-  \******************************************************************/
+/***/ "./compile/application/Model/Domain/Enum/ConditionValue.js":
+/*!*****************************************************************!*\
+  !*** ./compile/application/Model/Domain/Enum/ConditionValue.js ***!
+  \*****************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -89,10 +89,10 @@ var ConditionValue;
 
 /***/ }),
 
-/***/ "./compile/application/Model/Domain/Enums/KeyCodeList.js":
-/*!***************************************************************!*\
-  !*** ./compile/application/Model/Domain/Enums/KeyCodeList.js ***!
-  \***************************************************************/
+/***/ "./compile/application/Model/Domain/Enum/KeyCodeList.js":
+/*!**************************************************************!*\
+  !*** ./compile/application/Model/Domain/Enum/KeyCodeList.js ***!
+  \**************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -123,7 +123,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.Game = void 0;
-var ConditionValue_1 = __webpack_require__(/*! ./Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var ConditionValue_1 = __webpack_require__(/*! ./Enum/ConditionValue */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
 function Game() {
   this.point = 0;
   this.isModal = false;
@@ -147,7 +147,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.Snake = void 0;
-var ConditionValue_js_1 = __webpack_require__(/*! ./Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ./Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
 function Snake() {
   var _this = this;
   this.startX = ConditionValue_js_1.ConditionValue.startX;
@@ -161,7 +161,6 @@ function Snake() {
   this.nowProgressed = undefined;
   this.onX = ConditionValue_js_1.ConditionValue.startX;
   this.onY = ConditionValue_js_1.ConditionValue.startY;
-  // this.canChangeDirection = true;
   this.getLastY = function () {
     return _this.bodys[_this.bodys.length - 1][0];
   };
@@ -185,7 +184,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.BoardService = void 0;
-var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
 function BoardService() {
   this.initTable = function (element) {
     for (var i = 0; i < ConditionValue_js_1.ConditionValue.col; i++) {
@@ -227,8 +226,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.GameService = void 0;
-var ConditionValue_1 = __webpack_require__(/*! ../Domain/Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-var ClassList_js_1 = __webpack_require__(/*! ../Domain/Enums/ClassList.js */ "./compile/application/Model/Domain/Enums/ClassList.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
+var ClassList_js_1 = __webpack_require__(/*! ../Domain/Enum/ClassList.js */ "./compile/application/Model/Domain/Enum/ClassList.js");
 function GameService() {
   this.setGameState = function (Game, state) {
     Game.canPlay = state;
@@ -238,15 +237,15 @@ function GameService() {
   };
   this.setColor = function (length) {
     var quotient = Math.floor(length / 15);
-    if (ConditionValue_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_BLUE) {
+    if (ConditionValue_js_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_js_1.ConditionValue.MIN_BLUE) {
       return ClassList_js_1.ClassList.OPTIC;
-    } else if (ConditionValue_1.ConditionValue.MIN_BLUE <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_PURPLE) {
+    } else if (ConditionValue_js_1.ConditionValue.MIN_BLUE <= quotient && quotient < ConditionValue_js_1.ConditionValue.MIN_PURPLE) {
       return ClassList_js_1.ClassList.BLUE;
-    } else if (ConditionValue_1.ConditionValue.MIN_PURPLE <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_YELLOW) {
+    } else if (ConditionValue_js_1.ConditionValue.MIN_PURPLE <= quotient && quotient < ConditionValue_js_1.ConditionValue.MIN_YELLOW) {
       return ClassList_js_1.ClassList.PURPLE;
-    } else if (ConditionValue_1.ConditionValue.MIN_YELLOW <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_RED) {
+    } else if (ConditionValue_js_1.ConditionValue.MIN_YELLOW <= quotient && quotient < ConditionValue_js_1.ConditionValue.MIN_RED) {
       return ClassList_js_1.ClassList.YELLOW;
-    } else if (ConditionValue_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_1.ConditionValue.MIN_BLUE) {
+    } else if (ConditionValue_js_1.ConditionValue.MIN_OPTIC <= quotient && quotient < ConditionValue_js_1.ConditionValue.MIN_BLUE) {
       return ClassList_js_1.ClassList.RED;
     } else {
       return "";
@@ -269,9 +268,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.SnakeService = void 0;
-// import { classList } from '../Domain/Enums/ClassList.ts';
-var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
-var KeyCodeList_js_1 = __webpack_require__(/*! ../Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
+var KeyCodeList_js_1 = __webpack_require__(/*! ../Domain/Enum/KeyCodeList.js */ "./compile/application/Model/Domain/Enum/KeyCodeList.js");
 function SnakeService() {
   this.addSnake = function (Snake, y, x) {
     Snake.bodys.unshift([y, x]);
@@ -383,7 +381,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.InputView = void 0;
-var ConditionValue_1 = __webpack_require__(/*! ../Model/Domain/Enums/ConditionValue */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var ConditionValue_1 = __webpack_require__(/*! ../Model/Domain/Enum/ConditionValue */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
 function InputView() {
   this.setDifficultyNormal = function (Game) {
     if (!Game.isProceeding) {
@@ -413,7 +411,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.OutputView = void 0;
 var Documents_1 = __webpack_require__(/*! ../Model/Domain/Documents */ "./compile/application/Model/Domain/Documents.js");
-var ClassList_1 = __webpack_require__(/*! ../Model/Domain/Enums/ClassList */ "./compile/application/Model/Domain/Enums/ClassList.js");
+var ClassList_1 = __webpack_require__(/*! ../Model/Domain/Enum/ClassList */ "./compile/application/Model/Domain/Enum/ClassList.js");
 function OutputView() {
   this.addClassSnake = function (y, x) {
     Documents_1.Documents.position[y].children[x].classList.add(ClassList_1.ClassList.SNAKE);
@@ -495,8 +493,8 @@ var Snake_js_1 = __webpack_require__(/*! ./application/Model/Domain/Snake.js */ 
 var SnakeService_js_1 = __webpack_require__(/*! ./application/Model/Service/SnakeService.js */ "./compile/application/Model/Service/SnakeService.js");
 var Game_js_1 = __webpack_require__(/*! ./application/Model/Domain/Game.js */ "./compile/application/Model/Domain/Game.js");
 var GameService_js_1 = __webpack_require__(/*! ./application/Model/Service/GameService.js */ "./compile/application/Model/Service/GameService.js");
-var KeyCodeList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/KeyCodeList.js */ "./compile/application/Model/Domain/Enums/KeyCodeList.js");
-var ConditionValue_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enums/ConditionValue.js */ "./compile/application/Model/Domain/Enums/ConditionValue.js");
+var KeyCodeList_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enum/KeyCodeList.js */ "./compile/application/Model/Domain/Enum/KeyCodeList.js");
+var ConditionValue_js_1 = __webpack_require__(/*! ./application/Model/Domain/Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
 var OutputView_js_1 = __webpack_require__(/*! ./application/View/OutputView.js */ "./compile/application/View/OutputView.js");
 var InputView_js_1 = __webpack_require__(/*! ./application/View/InputView.js */ "./compile/application/View/InputView.js");
 function GameController() {

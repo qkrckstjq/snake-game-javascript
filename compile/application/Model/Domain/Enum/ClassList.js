@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ClassList = void 0;
+var ClassList;
+(function (ClassList) {
+    ClassList["TABLE"] = "#main__wrapper";
+    ClassList["SNAKE"] = "snake";
+    ClassList["POINT"] = "point";
+    ClassList["GAMEOVERMODAL"] = ".gameover__modal__wrapper";
+    ClassList["TR"] = "tr";
+    ClassList["OPTIC"] = "optic";
+    ClassList["BLUE"] = "blue";
+    ClassList["YELLOW"] = "yellow";
+    ClassList["PURPLE"] = "purple";
+    ClassList["RED"] = "red";
+    ClassList["DP_POINT"] = "dp__point";
+    ClassList["NORMAL"] = ".normal";
+    ClassList["HARD"] = ".hard";
+    ClassList["MODE"] = "now__mode";
+    ClassList["GRAY"] = "gray";
+})(ClassList || (exports.ClassList = ClassList = {}));
+;

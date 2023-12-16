@@ -1,42 +1,16 @@
-import { BoardService, BoardServiceType } from './application/Model/Service/BoardService.js';
-import { Documents, DocumentsType } from './application/Model/Domain/Documents.js';
-import { Snake, SnakeType } from './application/Model/Domain/Snake.js';
-import { SnakeService, SnakeServiceType } from './application/Model/Service/SnakeService.js';
-import { Game, GameType } from './application/Model/Domain/Game.js';
-import { GameService, GameServiceType } from './application/Model/Service/GameService.js';
-import { KeyCode } from './application/Model/Domain/Enums/KeyCodeList.js';
-import { ClassList } from './application/Model/Domain/Enums/ClassList.js';
-import { ConditionValue } from './application/Model/Domain/Enums/ConditionValue.js';
-import { OutputView, OutputViewType } from './application/View/OutputView.js';
-import { InputView, InputViewType } from './application/View/InputView.js';
+import { BoardService } from './application/Model/Service/BoardService.js';
+import { Documents } from './application/Model/Domain/Documents.js';
+import { Snake } from './application/Model/Domain/Snake.js';
+import { SnakeService } from './application/Model/Service/SnakeService.js';
+import { Game } from './application/Model/Domain/Game.js';
+import { GameService } from './application/Model/Service/GameService.js';
+import { KeyCode } from './application/Model/Domain/Enum/KeyCodeList.js';
+import { ConditionValue } from './application/Model/Domain/Enum/ConditionValue.js';
+import { OutputView } from './application/View/OutputView.js';
+import { InputView } from './application/View/InputView.js';
 
+import { GameControllerType } from './application/Model/Domain/Interface/ControllerType/GameControllerType.interface.js';
 
-interface GameControllerType {
-    Snake : SnakeType | undefined,
-    SnakeService : SnakeServiceType | undefined,
-    Documents : DocumentsType,
-    BoardService : BoardServiceType,
-    Game : GameType,
-    GameService : GameServiceType,
-    outputView : OutputViewType,
-    inputView : InputViewType,
-
-    setClassOnSnake : () => void,
-    removeAllSnakeClass : () => void,
-    makeNewPoint : () => void,
-    moveFoward : () => void,
-    gameStart : () => void,
-    gameInit : () => void,
-    whenOver : () => void,
-    checkOver : () => void,
-    whenOnPoint : () => void,
-    move : (keyCode : string) => void, 
-    moveAsync : (keyCode : string) => void,
-    checkMode : () => void,
-    whenClickNoraml : () => void,
-    whenClickHard : () => void,
-    run : (event : KeyboardEvent) => void
-}
 
 function GameController(this : GameControllerType) {
     this.Snake = new Snake();

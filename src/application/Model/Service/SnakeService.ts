@@ -1,23 +1,6 @@
-// import { classList } from '../Domain/Enums/ClassList.ts';
-import { ConditionValue } from '../Domain/Enums/ConditionValue.js';
-import { Documents } from '../Domain/Documents.js';
-import { KeyCode } from '../Domain/Enums/KeyCodeList.js';
-import { Snake, SnakeType } from '../Domain/Snake.js';
-import { BoardService, BoardServiceType } from './BoardService.js';
-import { Game, GameType} from '../Domain/Game.js';
-
-interface SnakeServiceType {
-    addSnake : (Snake:SnakeType, y : number, x : number) => void
-    removeSnake : (Snake : SnakeType) => void,
-    initSnake : (Snake : SnakeType, BoardService : BoardServiceType) => void,
-    checkOver : (Snake : SnakeType, element:HTMLCollectionOf<HTMLTableRowElement>) => boolean,
-    move : (inputCode : string, Snake : SnakeType) => void,
-    moveAsync : (keyCode : string, Snake : SnakeType, Game:GameType, callback : (() => void)[]) => void,
-    onHit : (Snake : SnakeType) => boolean,
-    checkCanChangeDirection : (Snake : SnakeType, keyCode : string) => boolean,
-    initState : (Snake : SnakeType) => void,
-    makePoint : (Snake : SnakeType, BoardService : BoardServiceType) => void
-}
+import { ConditionValue } from '../Domain/Enum/ConditionValue.js';
+import { KeyCode } from '../Domain/Enum/KeyCodeList.js';
+import { SnakeServiceType } from '../Domain/Interface/ServiceType/SnakeService.interface.js';
 
 function SnakeService(this:SnakeServiceType) {
     this.addSnake = (Snake, y, x) => {

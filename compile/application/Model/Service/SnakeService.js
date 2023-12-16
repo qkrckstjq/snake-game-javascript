@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SnakeService = void 0;
-// import { classList } from '../Domain/Enums/ClassList.ts';
-var ConditionValue_js_1 = require("../Domain/Enums/ConditionValue.js");
-var KeyCodeList_js_1 = require("../Domain/Enums/KeyCodeList.js");
+var ConditionValue_js_1 = require("../Domain/Enum/ConditionValue.js");
+var KeyCodeList_js_1 = require("../Domain/Enum/KeyCodeList.js");
 function SnakeService() {
     this.addSnake = function (Snake, y, x) {
         Snake.bodys.unshift([y, x]);
