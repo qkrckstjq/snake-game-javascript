@@ -27,4 +27,4 @@ function GameService(this:GameServiceType) {
     }
 }
 
-export {GameService, GameServiceType};
+export {GameService};

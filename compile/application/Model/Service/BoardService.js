@@ -19,7 +19,7 @@ function BoardService() {
             var numY = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.col - 1));
             var snakes = Snake.bodys;
             for (var i in snakes) {
-                if (numY == snakes[i][0] || numX == snakes[i][1]) {
+                if (numY == snakes[i][0] && numX == snakes[i][1]) {
                     continue;
                 }
             }

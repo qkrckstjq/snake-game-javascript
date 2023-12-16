@@ -15,4 +15,4 @@ function InputView (this : InputViewType) {
     }
 }
 
-export {InputView, InputViewType};
+export {InputView};

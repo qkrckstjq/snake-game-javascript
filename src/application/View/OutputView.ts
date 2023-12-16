@@ -16,7 +16,7 @@ function OutputView (this : OutputViewType) {
         Documents.position[y].children[x].classList.remove(ClassList.POINT);
     };
     this.removeClassName = (y, x) => {
-        Documents.position[y].children[x].className = "";
+        Documents.position[y].children[x].classList.remove(ClassList.SNAKE);
     };
     this.setTableColor = (color) => {
         Documents.table.className = color
@@ -35,4 +35,4 @@ function OutputView (this : OutputViewType) {
     };
 }
 
-export {OutputView, OutputViewType};
+export {OutputView};

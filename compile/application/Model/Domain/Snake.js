@@ -11,7 +11,7 @@ function Snake() {
     this.stateUp = true;
     this.stateDown = true;
     this.bodys = [[ConditionValue_js_1.ConditionValue.startY, ConditionValue_js_1.ConditionValue.startX]];
-    this.pointYX = [ConditionValue_js_1.ConditionValue.startX, ConditionValue_js_1.ConditionValue.startY];
+    this.pointYX = [ConditionValue_js_1.ConditionValue.startY, ConditionValue_js_1.ConditionValue.startX];
     this.nowProgressed = undefined;
     this.onX = ConditionValue_js_1.ConditionValue.startX;
     this.onY = ConditionValue_js_1.ConditionValue.startY;

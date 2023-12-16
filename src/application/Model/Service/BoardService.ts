@@ -18,7 +18,7 @@ function BoardService(this : BoardServiceType)  {
             const numY:number = Math.floor(Math.random() * (ConditionValue.col-1));
             const snakes = Snake.bodys;
             for(let i in snakes) {
-                if(numY == snakes[i][0] || numX == snakes[i][1]) {
+                if(numY == snakes[i][0] && numX == snakes[i][1]) {
                     continue;
                 }
             }
@@ -27,4 +27,4 @@ function BoardService(this : BoardServiceType)  {
     };
 }
 
-export { BoardService, BoardServiceType };
+export { BoardService };

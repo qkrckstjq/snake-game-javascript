@@ -47,12 +47,13 @@ function GameController() {
         _this.outputView.addClassSnake(_this.Snake.startY, _this.Snake.startX);
         _this.outputView.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
         _this.SnakeService.initState(_this.Snake);
+        _this.outputView.setTableColor(_this.GameService.setColor(_this.Snake.bodys.length));
     };
     this.whenOver = function () {
         clearInterval(_this.Snake.nowProgressed);
         _this.GameService.setGameState(_this.Game, false);
         _this.removeAllSnakeClass();
-        _this.outputView.removeClassName(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+        _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
         _this.gameInit();
     };
     this.checkOver = function () {
@@ -88,8 +89,6 @@ function GameController() {
         ]);
     };
     this.checkMode = function () {
-        console.log(_this.Game.speed, ConditionValue_js_1.ConditionValue.normal);
-        console.log(Documents_js_1.Documents.normalButton);
         if (_this.Game.speed == ConditionValue_js_1.ConditionValue.normal) {
             _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
             _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);

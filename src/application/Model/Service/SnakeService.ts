@@ -106,4 +106,4 @@ function SnakeService(this:SnakeServiceType) {
 
 }
 
-export { SnakeService, SnakeServiceType };
+export { SnakeService };

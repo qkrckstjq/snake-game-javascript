@@ -17,7 +17,7 @@ function OutputView() {
         Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.POINT);
     };
     this.removeClassName = function (y, x) {
-        Documents_1.Documents.position[y].children[x].className = "";
+        Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.SNAKE);
     };
     this.setTableColor = function (color) {
         Documents_1.Documents.table.className = color;

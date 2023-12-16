@@ -157,7 +157,7 @@ function Snake() {
   this.stateUp = true;
   this.stateDown = true;
   this.bodys = [[ConditionValue_js_1.ConditionValue.startY, ConditionValue_js_1.ConditionValue.startX]];
-  this.pointYX = [ConditionValue_js_1.ConditionValue.startX, ConditionValue_js_1.ConditionValue.startY];
+  this.pointYX = [ConditionValue_js_1.ConditionValue.startY, ConditionValue_js_1.ConditionValue.startX];
   this.nowProgressed = undefined;
   this.onX = ConditionValue_js_1.ConditionValue.startX;
   this.onY = ConditionValue_js_1.ConditionValue.startY;
@@ -202,7 +202,7 @@ function BoardService() {
       var numY = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.col - 1));
       var snakes = Snake.bodys;
       for (var i in snakes) {
-        if (numY == snakes[i][0] || numX == snakes[i][1]) {
+        if (numY == snakes[i][0] && numX == snakes[i][1]) {
           continue;
         }
       }
@@ -426,7 +426,7 @@ function OutputView() {
     Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.POINT);
   };
   this.removeClassName = function (y, x) {
-    Documents_1.Documents.position[y].children[x].className = "";
+    Documents_1.Documents.position[y].children[x].classList.remove(ClassList_1.ClassList.SNAKE);
   };
   this.setTableColor = function (color) {
     Documents_1.Documents.table.className = color;
@@ -533,12 +533,13 @@ function GameController() {
     _this.outputView.addClassSnake(_this.Snake.startY, _this.Snake.startX);
     _this.outputView.addClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
     _this.SnakeService.initState(_this.Snake);
+    _this.outputView.setTableColor(_this.GameService.setColor(_this.Snake.bodys.length));
   };
   this.whenOver = function () {
     clearInterval(_this.Snake.nowProgressed);
     _this.GameService.setGameState(_this.Game, false);
     _this.removeAllSnakeClass();
-    _this.outputView.removeClassName(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
+    _this.outputView.removeClassPoint(_this.Snake.pointYX[0], _this.Snake.pointYX[1]);
     _this.gameInit();
   };
   this.checkOver = function () {
@@ -572,8 +573,6 @@ function GameController() {
     _this.SnakeService.moveAsync(keyCode, _this.Snake, _this.Game, [_this.whenOnPoint]);
   };
   this.checkMode = function () {
-    console.log(_this.Game.speed, ConditionValue_js_1.ConditionValue.normal);
-    console.log(Documents_js_1.Documents.normalButton);
     if (_this.Game.speed == ConditionValue_js_1.ConditionValue.normal) {
       _this.outputView.addFocusOnButton(Documents_js_1.Documents.normalButton);
       _this.outputView.removeFocusOnButton(Documents_js_1.Documents.hardButton);

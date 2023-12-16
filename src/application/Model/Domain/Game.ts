@@ -9,4 +9,4 @@ function Game(this : GameType) {
     this.canPlay = true;
 }
 
-export {Game, GameType};
+export {Game};

@@ -8,7 +8,6 @@ import { KeyCode } from './application/Model/Domain/Enum/KeyCodeList.js';
 import { ConditionValue } from './application/Model/Domain/Enum/ConditionValue.js';
 import { OutputView } from './application/View/OutputView.js';
 import { InputView } from './application/View/InputView.js';
-
 import { GameControllerType } from './application/Model/Domain/Interface/ControllerType/GameControllerType.interface.js';
 
 
@@ -49,12 +48,13 @@ function GameController(this : GameControllerType) {
         this.outputView.addClassSnake(this.Snake.startY, this.Snake.startX);
         this.outputView.addClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
         this.SnakeService.initState(this.Snake);
+        this.outputView.setTableColor(this.GameService.setColor(this.Snake.bodys.length));
     };
     this.whenOver = () => {
         clearInterval(this.Snake.nowProgressed);
         this.GameService.setGameState(this.Game,false);
         this.removeAllSnakeClass();
-        this.outputView.removeClassName(this.Snake.pointYX[0], this.Snake.pointYX[1]);
+        this.outputView.removeClassPoint(this.Snake.pointYX[0], this.Snake.pointYX[1]);
         this.gameInit();
     };
     this.checkOver = () => {
@@ -90,8 +90,6 @@ function GameController(this : GameControllerType) {
         ]);
     };
     this.checkMode = () => {
-        console.log(this.Game.speed, ConditionValue.normal);
-        console.log(Documents.normalButton);
         if(this.Game.speed == ConditionValue.normal) {
             this.outputView.addFocusOnButton(Documents.normalButton);
             this.outputView.removeFocusOnButton(Documents.hardButton);

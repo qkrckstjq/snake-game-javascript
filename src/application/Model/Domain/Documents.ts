@@ -9,4 +9,4 @@ const Documents:DocumentsType = {
     hardButton : document.querySelector(ClassList.HARD),
 };
 
-export {Documents, DocumentsType};
+export {Documents};

@@ -9,7 +9,7 @@ function Snake (this:SnakeType) {
     this.stateUp = true;
     this.stateDown = true;
     this.bodys = [[ConditionValue.startY, ConditionValue.startX]];
-    this.pointYX = [ConditionValue.startX, ConditionValue.startY];
+    this.pointYX = [ConditionValue.startY, ConditionValue.startX];
     this.nowProgressed = undefined;
     this.onX = ConditionValue.startX;
     this.onY = ConditionValue.startY;
@@ -23,4 +23,4 @@ function Snake (this:SnakeType) {
 
 
 
-export { Snake, SnakeType };
+export { Snake };
