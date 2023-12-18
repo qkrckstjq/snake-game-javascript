@@ -13,11 +13,13 @@ function BoardService(this : BoardServiceType)  {
         }
     };
     this.makePoint = (Snake) => {
+        let numX:number;
+        let numY:number;
+        const snakes = Snake.bodys;
         while(true) {
-            const numX:number = Math.floor(Math.random() * (ConditionValue.row-1));
-            const numY:number = Math.floor(Math.random() * (ConditionValue.col-1));
-            const snakes = Snake.bodys;
-            for(let i in snakes) {
+            numX = Math.floor(Math.random() * (ConditionValue.row-1));
+            numY = Math.floor(Math.random() * (ConditionValue.col-1));
+            for(let i = 0; i < snakes.length; i++) { 
                 if(numY == snakes[i][0] && numX == snakes[i][1]) {
                     continue;
                 }
