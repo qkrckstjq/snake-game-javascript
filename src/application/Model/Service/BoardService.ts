@@ -1,5 +1,6 @@
 import { ConditionValue } from "../Domain/Enum/ConditionValue.js";
 import { BoardServiceType } from "../Domain/Interface/ServiceType/BoardService.interface.js";
+import { Utils } from "./utils.js";
 
 function BoardService(this : BoardServiceType)  {
     this.initTable = (element) => {
@@ -15,12 +16,16 @@ function BoardService(this : BoardServiceType)  {
     this.makePoint = (Snake) => {
         let numX:number;
         let numY:number;
+        let exclusiveY = -1;
+        let exclusiveX = -1;
         const snakes = Snake.bodys;
         point:while(true) {
-            numX = Math.floor(Math.random() * (ConditionValue.row-1));
-            numY = Math.floor(Math.random() * (ConditionValue.col-1));
+            numX = Utils.getRandomNumber(0, ConditionValue.row-1, exclusiveX);
+            numY = Utils.getRandomNumber(0, ConditionValue.col-1, exclusiveY);
             for(let i = 0; i < snakes.length; i++) { 
                 if(numY == snakes[i][0] && numX == snakes[i][1]) {
+                    exclusiveY = numY == snakes[i][0] ? numY : -1;
+                    exclusiveX = numX == snakes[i][1] ? numX : -1;
                     continue point;
                 }
             }

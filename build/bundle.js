@@ -185,6 +185,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.BoardService = void 0;
 var ConditionValue_js_1 = __webpack_require__(/*! ../Domain/Enum/ConditionValue.js */ "./compile/application/Model/Domain/Enum/ConditionValue.js");
+var utils_js_1 = __webpack_require__(/*! ./utils.js */ "./compile/application/Model/Service/utils.js");
 function BoardService() {
   this.initTable = function (element) {
     for (var i = 0; i < ConditionValue_js_1.ConditionValue.col; i++) {
@@ -199,12 +200,16 @@ function BoardService() {
   this.makePoint = function (Snake) {
     var numX;
     var numY;
+    var exclusiveY = -1;
+    var exclusiveX = -1;
     var snakes = Snake.bodys;
     point: while (true) {
-      numX = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.row - 1));
-      numY = Math.floor(Math.random() * (ConditionValue_js_1.ConditionValue.col - 1));
+      numX = utils_js_1.Utils.getRandomNumber(0, ConditionValue_js_1.ConditionValue.row - 1, exclusiveX);
+      numY = utils_js_1.Utils.getRandomNumber(0, ConditionValue_js_1.ConditionValue.col - 1, exclusiveY);
       for (var i = 0; i < snakes.length; i++) {
         if (numY == snakes[i][0] && numX == snakes[i][1]) {
+          exclusiveY = numY == snakes[i][0] ? numY : -1;
+          exclusiveX = numX == snakes[i][1] ? numX : -1;
           continue point;
         }
       }
@@ -368,6 +373,32 @@ function SnakeService() {
   };
 }
 exports.SnakeService = SnakeService;
+
+/***/ }),
+
+/***/ "./compile/application/Model/Service/utils.js":
+/*!****************************************************!*\
+  !*** ./compile/application/Model/Service/utils.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.Utils = void 0;
+var Utils = {
+  getRandomNumber: function getRandomNumber(min, max, exclusiveNumber) {
+    while (true) {
+      var result = Math.floor(Math.random() * (max - min) + min);
+      if (result != exclusiveNumber) {
+        return result;
+      }
+    }
+  }
+};
+exports.Utils = Utils;
 
 /***/ }),
 
