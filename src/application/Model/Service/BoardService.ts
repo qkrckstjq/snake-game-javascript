@@ -16,12 +16,12 @@ function BoardService(this : BoardServiceType)  {
         let numX:number;
         let numY:number;
         const snakes = Snake.bodys;
-        while(true) {
+        point:while(true) {
             numX = Math.floor(Math.random() * (ConditionValue.row-1));
             numY = Math.floor(Math.random() * (ConditionValue.col-1));
             for(let i = 0; i < snakes.length; i++) { 
                 if(numY == snakes[i][0] && numX == snakes[i][1]) {
-                    continue;
+                    continue point;
                 }
             }
             return [numY, numX];
